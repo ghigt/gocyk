@@ -9,11 +9,47 @@ type NonTerminal struct {
 	Right Token
 }
 
+func (NonTerminal) GetTerminal() (Terminal, bool) {
+	return Terminal(""), false
+}
+
+func (nt NonTerminal) GetLeft() (Token, bool) {
+	return nt.Right, true
+}
+
+func (nt NonTerminal) GetRight() (Token, bool) {
+	return nt.Left, true
+}
+
 type Terminal string
 
-type Rule interface{}
+func (t Terminal) GetTerminal() (Terminal, bool) {
+	return t, true
+}
+
+func (Terminal) GetLeft() (Token, bool) {
+	return Token(""), false
+}
+
+func (Terminal) GetRight() (Token, bool) {
+	return Token(""), false
+}
+
+type Rule interface {
+	//GetTerminal() (Terminal, bool)
+	//GetLeft() (Token, bool)
+	//GetRight() (Token, bool)
+}
 
 type Items []Token
+
+func (items *Items) Add(t Token) *Items {
+	if items == nil {
+		items = new(Items)
+	}
+	*items = append(*items, t)
+	return items
+}
 
 func (items *Items) String() string {
 	var buf bytes.Buffer
