@@ -6,59 +6,23 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	gram "github.com/ghigt/gocyk/grammar"
 )
 
-var grammar = Grammar{
-	"Number": {
-		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-		NonTerminal{"Integer", "Digit"},
-		NonTerminal{"N1", "Scale"},
-		NonTerminal{"Integer", "Fraction"},
-	},
-	"N1": {
-		NonTerminal{"Integer", "Fraction"},
-	},
-	"Integer": {
-		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-		NonTerminal{"Integer", "Digit"},
-	},
-	"Fraction": {
-		NonTerminal{"T1", "Integer"},
-	},
-	"T1": {
-		".",
-	},
-	"Scale": {
-		NonTerminal{"N2", "Integer"},
-	},
-	"N2": {
-		NonTerminal{"T2", "Sign"},
-	},
-	"T2": {
-		"e",
-	},
-	"Digit": {
-		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-	},
-	"Sign": {
-		"+",
-		"-",
-	},
-}
+var treeTab [][]*gram.Items
 
-var treeTab [][]*Items
-
-func check_grammar(tokenI, tokenJ Token, length, index int) {
+func check_grammar(tokenI, tokenJ gram.Token, length, index int) {
 	items := treeTab[index][length]
 
 	for i, rules := range grammar {
 		for _, rule := range rules {
-			v, ok := rule.(NonTerminal)
+			v, ok := rule.(gram.NonTerminal)
 			if ok && v.Left == tokenI && v.Right == tokenJ {
 				if items == nil {
-					items = new(Items)
+					items = new(gram.Items)
 				}
-				*items = append(*items, Token(i))
+				*items = append(*items, gram.Token(i))
 			}
 		}
 	}
@@ -88,13 +52,13 @@ func fill_tree() {
 }
 
 func first_length(i int, s string) {
-	var items Items
+	var items gram.Items
 
 	for index, rules := range grammar {
 		for _, rule := range rules {
-			v, ok := rule.(Terminal)
-			if ok && v == Terminal(s) {
-				items = append(items, Token(index))
+			v, ok := rule.(gram.Terminal)
+			if ok && v == gram.Terminal(s) {
+				items = append(items, gram.Token(index))
 			}
 		}
 	}
@@ -102,9 +66,9 @@ func first_length(i int, s string) {
 }
 
 func init_tree(input string) {
-	treeTab = make([][]*Items, len(input))
+	treeTab = make([][]*gram.Items, len(input))
 	for i := 0; i < len(input); i++ {
-		treeTab[i] = make([]*Items, len(input)-i)
+		treeTab[i] = make([]*gram.Items, len(input)-i)
 	}
 }
 
