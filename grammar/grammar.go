@@ -1,7 +1,5 @@
 package grammar
 
-import "bytes"
-
 type Token string
 
 type NonTerminal struct {
@@ -39,28 +37,6 @@ type Rule interface {
 	//GetTerminal() (Terminal, bool)
 	//GetLeft() (Token, bool)
 	//GetRight() (Token, bool)
-}
-
-type Items []Token
-
-func (items *Items) Add(t Token) *Items {
-	if items == nil {
-		items = new(Items)
-	}
-	*items = append(*items, t)
-	return items
-}
-
-func (items *Items) String() string {
-	var buf bytes.Buffer
-
-	buf.WriteString("{ ")
-	for _, i := range *items {
-		buf.WriteString(string(i) + " ")
-	}
-	buf.WriteString("}")
-
-	return buf.String()
 }
 
 type Rules []Rule
