@@ -1,24 +1,21 @@
 package table
 
-import (
-	"bytes"
-	"errors"
-)
+import "bytes"
 
 // RTable is the type to build a recognition table
 type RTable []*Column
 
-func (rt *RTable) GetColumn(index int) (*Column, error) {
-	if rt == nil {
-		return nil, errors.New("Error: null pointer")
-	}
-	return (*rt)[index], nil
+func (rt *RTable) GetColumn(index int) *Column {
+	return (*rt)[index]
+}
+
+func (rt *RTable) GetItem(column, index, int) *Item {
+	column := (*rt).GetColumn(column)
+
+	return column.GetItem(index)
 }
 
 func (rt *RTable) Add(s string) error {
-	if rt == nil {
-		return errors.New("Error: null pointer")
-	}
 	//lengthT := make([]*Item, len(*rt)+1)
 
 	// -- TEST --
@@ -28,30 +25,18 @@ func (rt *RTable) Add(s string) error {
 }
 
 func (rt *RTable) Insert(index int) error {
-	if rt == nil {
-		return errors.New("Error: null pointer")
-	}
 	return nil
 }
 
 func (rt *RTable) Remove(index int) error {
-	if rt == nil {
-		return errors.New("Error: null pointer")
-	}
 	return nil
 }
 
 func (rt *RTable) Valid() bool {
-	if rt == nil {
-		return false
-	}
 	return false
 }
 
 func (rt *RTable) ValidFor(beg, end int) bool {
-	if rt == nil {
-		return false
-	}
 	return false
 }
 
