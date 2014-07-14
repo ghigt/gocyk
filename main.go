@@ -11,7 +11,7 @@ import (
 
 func main() {
 	var input string
-	rtable := new(table.RTable)
+	rtable := table.New(&grammar)
 
 	if len(os.Args) >= 2 {
 		input = os.Args[1]

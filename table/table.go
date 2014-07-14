@@ -1,9 +1,21 @@
 package table
 
-import "bytes"
+import (
+	"bytes"
+
+	gram "github.com/ghigt/gocyk/grammar"
+)
 
 // RTable is the type to build a recognition table
 type RTable []*Column
+
+var grammar *gram.Grammar
+
+func New(g *gram.Grammar) *RTable {
+	grammar = g
+
+	return &RTable
+}
 
 func (rt *RTable) GetColumn(index int) *Column {
 	return (*rt)[index]
@@ -15,13 +27,10 @@ func (rt *RTable) GetItem(column, index, int) *Item {
 	return column.GetItem(index)
 }
 
-func (rt *RTable) Add(s string) error {
-	//lengthT := make([]*Item, len(*rt)+1)
-
-	// -- TEST --
-	// -- TEST --
-
-	return nil
+func (rt *RTable) Add(s string) {
+	c := new(Column)
+	*rt = append(*rt, c)
+	c.AddAndCompute(s, rt)
 }
 
 func (rt *RTable) Insert(index int) error {

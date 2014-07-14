@@ -43,10 +43,24 @@ type Rules []Rule
 
 type Grammar map[Token]Rules
 
-func (g Grammar) GetListOfT(t Token) []*Terminal {
+func (g *Grammar) GetTerminalTokens(s string) []Token {
+	tokens := []Token{}
+
+	for _, rules := range *g {
+		for _, r := range rules {
+			v, ok := r.(Terminal)
+			if ok && v == s {
+				tokens = append(tokens, t)
+			}
+		}
+	}
+	return tokens
+}
+
+func (g *Grammar) GetListOfT(t Token) []*Terminal {
 	nt := []*Terminal{}
 
-	for _, i := range g[t] {
+	for _, i := range (*g)[t] {
 		v, ok := i.(Terminal)
 		if ok {
 			nt = append(nt, &v)
@@ -55,10 +69,10 @@ func (g Grammar) GetListOfT(t Token) []*Terminal {
 	return nt
 }
 
-func (g Grammar) GetListOfNT(t Token) []*NonTerminal {
+func (g *Grammar) GetListOfNT(t Token) []*NonTerminal {
 	nt := []*NonTerminal{}
 
-	for _, i := range g[t] {
+	for _, i := range (*g)[t] {
 		v, ok := i.(NonTerminal)
 		if ok {
 			nt = append(nt, &v)
