@@ -42,6 +42,9 @@ func (rt *RTable) Remove(index int) error {
 }
 
 func (rt *RTable) Valid() bool {
+	if rt.GetItem(len(*rt)-1, 0) != nil {
+		return true
+	}
 	return false
 }
 
@@ -55,11 +58,9 @@ func (rt *RTable) String() string {
 	if rt == nil {
 		return "nil"
 	}
-	buf.WriteString("[length][index]\n")
-	//for i, index := range *rt {
-	// Add column
-	//buf.WriteString(index[l].String() + " ")
-	//}
+	for _, column := range *rt {
+		buf.WriteString(column.String() + "\n")
+	}
 
 	return buf.String()
 }

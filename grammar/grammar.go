@@ -48,7 +48,7 @@ func (g *Grammar) GetTerminalTokens(s string) []Token {
 
 	for t, rules := range *g {
 		for _, r := range rules {
-			v, ok := r.(Terminal)
+			v, ok := r.(string) // Terminal declared as type string
 			if ok && string(v) == s {
 				tokens = append(tokens, t)
 			}

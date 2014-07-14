@@ -8,16 +8,20 @@ import (
 
 type Item []gram.Token
 
-func (item *Item) Add(t ...gram.Token) {
+func (item *Item) Add(t ...gram.Token) *Item {
 	if item == nil {
 		item = new(Item)
 	}
 	*item = append(*item, t...)
+	return item
 }
 
 func (item *Item) String() string {
 	var buf bytes.Buffer
 
+	if item == nil {
+		return "nil"
+	}
 	buf.WriteString("{ ")
 	for _, i := range *item {
 		buf.WriteString(string(i) + " ")
