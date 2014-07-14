@@ -7,8 +7,8 @@ type NonTerminal struct {
 	Right Token
 }
 
-func (NonTerminal) GetTerminal() (Terminal, bool) {
-	return Terminal(""), false
+func (NonTerminal) GetToken() (Token, bool) {
+	return Token(""), false
 }
 
 func (nt NonTerminal) GetLeft() (Token, bool) {
@@ -21,8 +21,8 @@ func (nt NonTerminal) GetRight() (Token, bool) {
 
 type Terminal string
 
-func (t Terminal) GetTerminal() (Terminal, bool) {
-	return t, true
+func (t Terminal) GetToken() (Token, bool) {
+	return Token(t), true
 }
 
 func (Terminal) GetLeft() (Token, bool) {
