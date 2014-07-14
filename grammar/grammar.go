@@ -46,10 +46,10 @@ type Grammar map[Token]Rules
 func (g *Grammar) GetTerminalTokens(s string) []Token {
 	tokens := []Token{}
 
-	for _, rules := range *g {
+	for t, rules := range *g {
 		for _, r := range rules {
 			v, ok := r.(Terminal)
-			if ok && v == s {
+			if ok && string(v) == s {
 				tokens = append(tokens, t)
 			}
 		}

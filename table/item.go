@@ -8,12 +8,11 @@ import (
 
 type Item []gram.Token
 
-func (item *Item) Add(t ...gram.Token) *Item {
+func (item *Item) Add(t ...gram.Token) {
 	if item == nil {
 		item = new(Item)
 	}
 	*item = append(*item, t...)
-	return item
 }
 
 func (item *Item) String() string {

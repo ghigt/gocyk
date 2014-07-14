@@ -14,17 +14,17 @@ var grammar *gram.Grammar
 func New(g *gram.Grammar) *RTable {
 	grammar = g
 
-	return &RTable
+	return &RTable{}
 }
 
 func (rt *RTable) GetColumn(index int) *Column {
 	return (*rt)[index]
 }
 
-func (rt *RTable) GetItem(column, index, int) *Item {
-	column := (*rt).GetColumn(column)
+func (rt *RTable) GetItem(column, index int) *Item {
+	c := (*rt).GetColumn(column)
 
-	return column.GetItem(index)
+	return c.GetItem(index)
 }
 
 func (rt *RTable) Add(s string) {

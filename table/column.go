@@ -3,7 +3,7 @@ package table
 type Column []*Item
 
 func (c *Column) GetItem(index int) *Item {
-	return (*c)[index], nil
+	return (*c)[index]
 }
 
 func (c *Column) AddAndCompute(s string, rt *RTable) {
@@ -11,7 +11,7 @@ func (c *Column) AddAndCompute(s string, rt *RTable) {
 
 	for i := len(*rt) - 1; i >= 0; i-- {
 		if i == len(*rt)-1 {
-			c[i].Add(grammar.GetTerminalTokens(s))
+			(*c)[i].Add(grammar.GetTerminalTokens(s)...)
 		}
 	}
 }
