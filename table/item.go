@@ -16,6 +16,17 @@ func (item *Item) Add(t ...gram.Token) *Item {
 	return item
 }
 
+func (item *Item) GetTokens() []gram.Token {
+	return *item
+}
+
+func (item *Item) Empty() bool {
+	if len(*item) == 0 {
+		return true
+	}
+	return false
+}
+
 func (item *Item) String() string {
 	var buf bytes.Buffer
 

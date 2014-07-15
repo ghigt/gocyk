@@ -10,12 +10,18 @@ func (c *Column) GetItem(index int) *Item {
 
 func (c *Column) AddAndCompute(s string, rt *RTable) {
 	*c = make([]*Item, len(*rt))
+	pos := len(*rt) - 1 // current position of the column
 
-	for i := len(*rt) - 1; i >= 0; i-- {
-		if i == len(*rt)-1 {
-			(*c)[i] = (*c)[i].Add(grammar.GetTerminalTokens(s)...)
+	for i := pos; i >= 0; i-- {
+		if i == pos {
+			(*c)[i] = (*c)[i].Add(grammar.GetTokensOfT(s)...)
 		} else {
-			// Compute the end of the column
+			for l := i; l < pos; l++ {
+				(*c)[i] = (*c)[i].Add(grammar.GetTokensOfNT(
+					(*rt).GetItem(l, i).GetTokens(),
+					(*rt).GetItem(pos, l+1).GetTokens(),
+				)...)
+			}
 		}
 	}
 }

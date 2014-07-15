@@ -42,7 +42,7 @@ func (rt *RTable) Remove(index int) error {
 }
 
 func (rt *RTable) Valid() bool {
-	if rt.GetItem(len(*rt)-1, 0) != nil {
+	if rt.GetItem(len(*rt)-1, 0).Empty() != true {
 		return true
 	}
 	return false
