@@ -42,7 +42,9 @@ func PrettyPrint(rt *RTable) string {
 	s, m := getStringTab(rt)
 	length := len(*rt)
 
-	fmt.Println(strings.Repeat("-", (m+1)*length+1))
+	fmt.Printf("+")
+	fmt.Printf(strings.Repeat("-", (m+1)*length-1))
+	fmt.Println("+")
 	for row := 0; row < length; row++ {
 		l := 1
 		for tok := 0; tok < l; tok++ {
@@ -64,7 +66,13 @@ func PrettyPrint(rt *RTable) string {
 			fmt.Println()
 		}
 		fmt.Printf(strings.Repeat(" ", (m+1)*row))
-		fmt.Println(strings.Repeat("-", (m+1)*(length-row)+1))
+		fmt.Printf("+")
+		fmt.Printf(strings.Repeat("-", (m+1)*(length-row)-1))
+		if row+1 == length {
+			fmt.Println("+")
+		} else {
+			fmt.Println("|")
+		}
 	}
 
 	return ""
