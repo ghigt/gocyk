@@ -17,7 +17,8 @@ $ go get github.com/ghigt/gocyk
 Usage
 =====
 
-One parameter corresponding to the string to be parsed, for example:
+First, look at the grammar file `gram_cyk.go` and feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).  
+Then, launch the program with one parameter corresponding to the string to be parsed, for example:
 ```bash
 $ gocyk "12.3e+1"
 
