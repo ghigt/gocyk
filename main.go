@@ -30,7 +30,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 
-	fmt.Println(rtable)
+	table.PrettyPrint(rtable)
 
 	if rtable.Valid() {
 		fmt.Println("It works :)")
