@@ -34,7 +34,7 @@ func (Terminal) GetRight() (Token, bool) {
 }
 
 type Rule interface {
-	//GetTerminal() (Terminal, bool)
+	//GetToken() (Token, bool)
 	//GetLeft() (Token, bool)
 	//GetRight() (Token, bool)
 }
