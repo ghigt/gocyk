@@ -50,6 +50,16 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 
+	// --TEST--
+	//if err := rtable.Insert(".", 6); err != nil {
+	//	log.Fatal(err)
+	//}
+	//if err := term.SetCap("cl"); err != nil {
+	//	fmt.Println(err)
+	//}
+	//table.PrettyPrint(rtable)
+	// --TEST--
+
 	if rtable.Valid() {
 		fmt.Println("It works :)")
 	} else {
