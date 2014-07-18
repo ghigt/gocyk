@@ -36,7 +36,6 @@ func (item *Item) String() string {
 	buf.WriteString("{ ")
 	for _, i := range *item {
 		buf.WriteString(string(i) + " ")
-
 	}
 	buf.WriteString("}")
 

@@ -12,7 +12,9 @@ import (
 	"github.com/ghigt/gotd/term"
 )
 
-var verbose = flag.Bool("v", false, "Print recognition table")
+var (
+	verbose = flag.Bool("v", false, "Print recognition table")
+)
 
 func main() {
 	var input string
@@ -51,13 +53,23 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := rtable.Insert(".", 6); err != nil {
+	//if err := rtable.Insert(".", 1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
 	//table.PrettyPrint(rtable)
+	//if err := rtable.Remove(1); err != nil {
+	//	log.Fatal(err)
+	//}
+	//if err := term.SetCap("cl"); err != nil {
+	//	fmt.Println(err)
+	//}
+	//table.PrettyPrint(rtable)
+	if rtable.ValidFor(1, 4) {
+		fmt.Println("Valid from 1 to 4 :)")
+	}
 	// --TEST--
 
 	if rtable.Valid() {

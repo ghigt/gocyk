@@ -1,9 +1,6 @@
 package table
 
-import (
-	"bytes"
-	"fmt"
-)
+import "bytes"
 
 type Column []*Item
 
@@ -15,6 +12,10 @@ func (c *Column) Front(item *Item) {
 	*c = append(*c, nil)
 	copy((*c)[1:], (*c)[:])
 	(*c)[0] = item
+}
+
+func (c *Column) PopFront() {
+	*c = (*c)[1:]
 }
 
 func (c *Column) compute(s string, pos int, rt *RTable) {
@@ -35,7 +36,6 @@ func (c *Column) compute(s string, pos int, rt *RTable) {
 func (c *Column) ComputeFrom(pos int, col int, rt *RTable) {
 	for i := pos; i >= 0; i-- {
 		(*c)[i] = &Item{}
-		fmt.Println("coucou")
 		for l := i; l < col; l++ {
 			(*c)[i] = (*c)[i].Add(grammar.GetTokensOfNT(
 				(*rt).GetItem(l, i).GetTokens(),

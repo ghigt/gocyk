@@ -34,7 +34,7 @@ func (rt *RTable) Add(s string) {
 	c.AddAndCompute(s, rt)
 }
 
-func (rt *RTable) modifyFollowing(pos int) {
+func (rt *RTable) insertFollowing(pos int) {
 	for col := pos + 1; col < len(*rt); col++ {
 		(*rt)[col].Front(&Item{})
 		(*rt)[col].ComputeFrom(pos, col, rt)
@@ -56,11 +56,23 @@ func (rt *RTable) Insert(s string, pos int) error {
 	(*rt)[pos] = c
 	c.InsertAndCompute(s, pos, rt)
 
-	rt.modifyFollowing(pos)
+	rt.insertFollowing(pos)
 	return nil
 }
 
-func (rt *RTable) Remove(index int) error {
+func (rt *RTable) removeFollowing(pos int) {
+	for col := pos; col < len(*rt); col++ {
+		(*rt)[col].PopFront()
+		(*rt)[col].ComputeFrom(pos-1, col, rt)
+	}
+}
+
+func (rt *RTable) Remove(pos int) error {
+	if pos < 0 || pos >= len(*rt) {
+		return errors.New("index out of range")
+	}
+	(*rt) = append((*rt)[:pos], (*rt)[pos+1:]...)
+	rt.removeFollowing(pos)
 	return nil
 }
 
@@ -72,6 +84,16 @@ func (rt *RTable) Valid() bool {
 }
 
 func (rt *RTable) ValidFor(beg, end int) bool {
+	length := len(*rt)
+
+	if beg < 0 || beg >= length ||
+		end < 0 || end >= length ||
+		end < beg {
+		return false
+	}
+	if rt.GetItem(end, beg).Empty() != true {
+		return true
+	}
 	return false
 }
 
