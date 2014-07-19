@@ -41,3 +41,35 @@ var grammar = gram.Grammar{
 		"-",
 	},
 }
+
+// Example grammar from Wikipedia:
+// http://en.wikipedia.org/wiki/CYK_algorithm
+var grammarWiki = gram.Grammar{
+	"S": {
+		gram.NonTerminal{"NP", "VP"},
+	},
+	"VP": {
+		"eats",
+		gram.NonTerminal{"VP", "PP"},
+		gram.NonTerminal{"V", "NP"},
+	},
+	"PP": {
+		gram.NonTerminal{"P", "NP"},
+	},
+	"NP": {
+		"she",
+		gram.NonTerminal{"Det", "N"},
+	},
+	"V": {
+		"eats",
+	},
+	"P": {
+		"with",
+	},
+	"N": {
+		"fish", "fork",
+	},
+	"Det": {
+		"a",
+	},
+}
