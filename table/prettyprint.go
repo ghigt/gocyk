@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// max returns the meximum of two integers.
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -12,6 +13,8 @@ func max(a, b int) int {
 	return b
 }
 
+// getStringTab returns a table of all the tokens of the recognition
+// table converted into strings.
 func getStringTab(rt *RTable) (*[][][]string, int) {
 	s := make([][][]string, len(*rt))
 	m := 1
@@ -31,6 +34,8 @@ func getStringTab(rt *RTable) (*[][][]string, int) {
 	return &s, m
 }
 
+// printToken prints a string followed by spaces corresponding to
+// the `max` parameter.
 func printToken(s string, max int) {
 	fmt.Printf(s)
 	if l := len(s); l < max {
@@ -38,6 +43,7 @@ func printToken(s string, max int) {
 	}
 }
 
+// PrettyPrint prints a given recognition table.
 func PrettyPrint(rt *RTable) string {
 	s, m := getStringTab(rt)
 	length := len(*rt)
