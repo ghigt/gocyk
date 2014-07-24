@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ghigt/gocyk/table"
+	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
 
@@ -18,7 +18,7 @@ var (
 
 func main() {
 	var input string
-	rtable := table.New(&grammar)
+	rt := rtable.New(&grammar)
 
 	flag.Parse()
 
@@ -38,13 +38,13 @@ func main() {
 	scanner.Split(bufio.ScanBytes)
 
 	for i := 0; scanner.Scan(); i++ {
-		rtable.Add(scanner.Text())
+		rt.Add(scanner.Text())
 		if *verbose {
 			// clear screen
 			if err := term.SetCap("cl"); err != nil {
 				fmt.Println(err)
 			}
-			table.PrettyPrint(rtable)
+			rtable.PrettyPrint(rt)
 			time.Sleep(500 * time.Millisecond)
 		}
 	}
@@ -53,26 +53,26 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := rtable.Insert(".", 1); err != nil {
+	//if err := rt.Insert(".", 1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//table.PrettyPrint(rtable)
-	//if err := rtable.Remove(1); err != nil {
+	//rt.PrettyPrint(rtable)
+	//if err := rt.Remove(1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//table.PrettyPrint(rtable)
-	if rtable.ValidFor(1, 4) {
+	//rtable.PrettyPrint(rtable)
+	if rt.ValidFor(1, 4) {
 		fmt.Println("Valid from 1 to 4 :)")
 	}
 	// --TEST--
 
-	if rtable.Valid() {
+	if rt.Valid() {
 		fmt.Println("It works :)")
 	} else {
 		fmt.Println("It fails :(")
