@@ -1,3 +1,8 @@
+/*
+  Package rtable manages and create a recognition table following
+  the rules of the CYK (Cocke Younger Kasami) algorithm with a
+  CNF (Chomsky Normal Form) grammar.
+*/
 package rtable
 
 import (

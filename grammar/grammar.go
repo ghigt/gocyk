@@ -1,5 +1,7 @@
-// Package grammar implements utility for
-// manipulating and create a CNF grammar.
+/*
+  Package grammar implements utility for manipulating
+  and create a CNF (Chomsky Normal Form) grammar.
+*/
 package grammar
 
 // Token type represent the symbol or a substring of

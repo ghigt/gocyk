@@ -1,3 +1,7 @@
+/*
+  Package ptree manipulates the parsing tree after generation
+  of a recognition table.
+*/
 package ptree
 
 import "github.com/ghigt/gocyk/grammar"
