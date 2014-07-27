@@ -2,7 +2,7 @@ GoCYK
 =====
 
 GoCYK is an implementation of an online parsing using the CYK algorithm.
-The given result recognition table is a merge between these two resources : 
+The given result recognition table is a merge between these two resources: 
 * [Parsing techniques: A practical guide (*ch. 4*)](http://port70.net/~nsz/articles/book/grune_jacobs_parsing_techniques_2008.pdf)
 * [Parallel on-line parsing in constant time per word](http://doc.utwente.nl/18047/1/Sikkel93parallel.pdf)
 
