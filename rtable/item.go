@@ -3,14 +3,14 @@ package rtable
 import (
 	"bytes"
 
-	gram "github.com/ghigt/gocyk/grammar"
+	grm "github.com/ghigt/gocyk/grammar"
 )
 
 // Item type represents a slice of tokens for the recognition table.
-type Item []gram.Token
+type Item []grm.Token
 
 // Add adds multiple token at the end of the item.
-func (item *Item) Add(t ...gram.Token) *Item {
+func (item *Item) Add(t ...grm.Token) *Item {
 	if item == nil {
 		item = new(Item)
 	}
@@ -19,12 +19,12 @@ func (item *Item) Add(t ...gram.Token) *Item {
 }
 
 // GetTokens returns all the tokens of the item.
-func (item *Item) GetTokens() []gram.Token {
+func (item *Item) GetTokens() []grm.Token {
 	return *item
 }
 
-// Empty checks if the item is empty or not.
-func (item *Item) Empty() bool {
+// IsEmpty checks if the item is empty or not.
+func (item *Item) IsEmpty() bool {
 	if len(*item) == 0 {
 		return true
 	}

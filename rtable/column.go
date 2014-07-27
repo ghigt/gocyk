@@ -27,10 +27,10 @@ func (c *Column) PopFront() {
 func (c *Column) compute(s string, pos int, rt *RTable) {
 	for i := pos; i >= 0; i-- {
 		if i == pos {
-			(*c)[i] = (*c)[i].Add(grammar.GetTokensOfT(s)...)
+			(*c)[i] = (*c)[i].Add(Grammar.GetTokensOfT(s)...)
 		} else {
 			for l := i; l < pos; l++ {
-				(*c)[i] = (*c)[i].Add(grammar.GetTokensOfNT(
+				(*c)[i] = (*c)[i].Add(Grammar.GetTokensOfNT(
 					(*rt).GetItem(l, i).GetTokens(),
 					(*rt).GetItem(pos, l+1).GetTokens(),
 				)...)
@@ -46,7 +46,7 @@ func (c *Column) ComputeFrom(pos int, col int, rt *RTable) {
 	for i := pos; i >= 0; i-- {
 		(*c)[i] = &Item{}
 		for l := i; l < col; l++ {
-			(*c)[i] = (*c)[i].Add(grammar.GetTokensOfNT(
+			(*c)[i] = (*c)[i].Add(Grammar.GetTokensOfNT(
 				(*rt).GetItem(l, i).GetTokens(),
 				(*rt).GetItem(col, l+1).GetTokens(),
 			)...)

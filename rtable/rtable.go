@@ -8,18 +8,18 @@ package rtable
 import (
 	"bytes"
 
-	gram "github.com/ghigt/gocyk/grammar"
+	grm "github.com/ghigt/gocyk/grammar"
 )
 
 // RTable is the type to build a recognition table.
 type RTable []*Column
 
 // grammar is the variable used in the grammar package.
-var grammar *gram.Grammar
+var Grammar *grm.Grammar
 
 // New returns a new recognition table for the given grammar.
-func New(g *gram.Grammar) *RTable {
-	grammar = g
+func New(g *grm.Grammar) *RTable {
+	Grammar = g
 
 	return &RTable{}
 }
@@ -40,7 +40,7 @@ func (rt *RTable) GetItem(column, index int) *Item {
 // Valid returns true if the recognition table is valid. This method
 // checks if the top left item is empty or not.
 func (rt *RTable) Valid() bool {
-	if rt.GetItem(len(*rt)-1, 0).Empty() != true {
+	if rt.GetItem(len(*rt)-1, 0).IsEmpty() != true {
 		return true
 	}
 	return false
@@ -56,7 +56,7 @@ func (rt *RTable) ValidFor(beg, end int) bool {
 		end < beg {
 		return false
 	}
-	if rt.GetItem(end, beg).Empty() != true {
+	if rt.GetItem(end, beg).IsEmpty() != true {
 		return true
 	}
 	return false
