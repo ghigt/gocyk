@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ghigt/gocyk/ptree"
 	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
@@ -77,4 +78,7 @@ func main() {
 	} else {
 		fmt.Println("It fails :(")
 	}
+
+	// Build ParseTree
+	ptree.Build(rt)
 }

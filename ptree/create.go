@@ -5,7 +5,7 @@ import (
 	"github.com/ghigt/gocyk/rtable"
 )
 
-func checkRight(rt *RTable, col int, row int, tok grm.Token) {
+func checkRight(rt *rtable.RTable, col int, row int, tok grm.Token) bool {
 	itm := rt.GetItem(col, row)
 
 	for _, t := range itm.GetTokens() {
@@ -16,7 +16,7 @@ func checkRight(rt *RTable, col int, row int, tok grm.Token) {
 	return false
 }
 
-func buildTree(rt *RTable, tok grm.Token, row int, col int) *PTree {
+func buildTree(rt *rtable.RTable, tok grm.Token, row int, col int) *PTree {
 	for _, nt := range rt.Grammar.GetListOfNT(tok) {
 		left := nt.GetLeft()
 		right := nt.GetRight()
@@ -51,7 +51,7 @@ func Build(rt *rtable.RTable) []*PTree {
 					//rt.Grammar.GetListOfT()
 				} else {
 					for _, tok := range itm.GetTokens() {
-						pts = pts.append(pts, buildTree(rt, tok, row, col))
+						pts = append(pts, buildTree(rt, tok, row, col))
 					}
 				}
 				break
@@ -59,4 +59,5 @@ func Build(rt *rtable.RTable) []*PTree {
 		}
 		row = col + 1
 	}
+	return pts
 }

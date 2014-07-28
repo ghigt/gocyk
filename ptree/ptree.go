@@ -28,5 +28,5 @@ func (t *PTree) InsertLeft(v grm.Token) {
 
 // New returns a new tree with empty nodes and the given value.
 func New(v grm.Token) *PTree {
-	return &Tree{nil, v, nil}
+	return &PTree{nil, v, nil}
 }
