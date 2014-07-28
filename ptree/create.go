@@ -17,8 +17,6 @@ func checkRight(rt *RTable, col int, row int, tok grm.Token) {
 }
 
 func buildTree(rt *RTable, tok grm.Token, row int, col int) *PTree {
-	pt := *Ptree{}
-
 	for _, nt := range rt.Grammar.GetListOfNT(tok) {
 		left := nt.GetLeft()
 		right := nt.GetRight()
@@ -26,12 +24,16 @@ func buildTree(rt *RTable, tok grm.Token, row int, col int) *PTree {
 			if itm := rt.GetItem(c, row); itm.isEmpty() != true {
 				for _, t := range itm.GetTokens() {
 					if t == left && checkRight(rt, col, c+1, right) {
-						// GOOD
+						pt := New(tok)
+						pt.InsertLeft(left)
+						pt.InsertRight(right)
+						return pt
 					}
 				}
 			}
 		}
 	}
+	return nil
 }
 
 func Build(rt *rtable.RTable) []*PTree {
