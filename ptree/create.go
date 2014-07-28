@@ -16,14 +16,14 @@ func checkRight(rt *rtable.RTable, col int, row int, tok grm.Token) bool {
 	return false
 }
 
-func buildTree(rt *rtable.RTable, tok grm.Token, row int, col int) *PTree {
-	for _, nt := range rt.Grammar.GetListOfNT(tok) {
+func buildTree(tst *rtable.TableST, tok grm.Token, row int, col int) *PTree {
+	for _, nt := range tst.Grammar.GetListOfNT(tok) {
 		left := nt.GetLeft()
 		right := nt.GetRight()
 		for c := col - 1; c >= row; c-- {
-			if itm := rt.GetItem(c, row); itm.isEmpty() != true {
+			if itm := tst.GetItem(c, row); itm.isEmpty() != true {
 				for _, t := range itm.GetTokens() {
-					if t == left && checkRight(rt, col, c+1, right) {
+					if t == left && checkRight(tst.Table, col, c+1, right) {
 						pt := New(tok)
 						pt.InsertLeft(left)
 						pt.InsertRight(right)
@@ -36,22 +36,22 @@ func buildTree(rt *rtable.RTable, tok grm.Token, row int, col int) *PTree {
 	return nil
 }
 
-func Build(rt *rtable.RTable) []*PTree {
-	size := len(*rt)
+func Build(tst *rtable.TableST) []*PTree {
+	size := len(*tst)
 	pts := []*PTree{}
 
 	// iterate over rows
 	for row := 0; row < size; {
 		col := size - 1
 		for ; col >= row; col-- {
-			itm := rt.GetItem(col, row)
+			itm := tst.GetItem(col, row)
 			if itm.IsEmpty() == true {
 				if col == row {
 					// Add Terminals
-					//rt.Grammar.GetListOfT()
+					//tst.Grammar.GetListOfT()
 				} else {
 					for _, tok := range itm.GetTokens() {
-						pts = append(pts, buildTree(rt, tok, row, col))
+						pts = append(pts, buildTree(tst, tok, row, col))
 					}
 				}
 				break

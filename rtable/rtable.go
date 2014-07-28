@@ -5,24 +5,10 @@
 */
 package rtable
 
-import (
-	"bytes"
-
-	grm "github.com/ghigt/gocyk/grammar"
-)
+import "bytes"
 
 // RTable is the type to build a recognition table.
 type RTable []*Column
-
-// grammar is the variable used in the grammar package.
-var Grammar *grm.Grammar
-
-// New returns a new recognition table for the given grammar.
-func New(g *grm.Grammar) *RTable {
-	Grammar = g
-
-	return &RTable{}
-}
 
 // GetColumn returns the column corresponding to the given parameter.
 func (rt *RTable) GetColumn(col int) *Column {
@@ -71,6 +57,5 @@ func (rt *RTable) String() string {
 	for _, column := range *rt {
 		buf.WriteString(column.String() + "\n")
 	}
-
 	return buf.String()
 }

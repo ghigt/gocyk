@@ -19,7 +19,7 @@ var (
 
 func main() {
 	var input string
-	rt := rtable.New(&grammar)
+	tst := rtable.New(&grammar)
 
 	flag.Parse()
 
@@ -39,13 +39,13 @@ func main() {
 	scanner.Split(bufio.ScanBytes)
 
 	for i := 0; scanner.Scan(); i++ {
-		rt.Add(scanner.Text())
+		tst.Add(scanner.Text())
 		if *verbose {
 			// clear screen
 			if err := term.SetCap("cl"); err != nil {
 				fmt.Println(err)
 			}
-			rtable.PrettyPrint(rt)
+			rtable.PrettyPrint(tst.RTable)
 			time.Sleep(500 * time.Millisecond)
 		}
 	}
@@ -54,31 +54,31 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := rt.Insert(".", 1); err != nil {
+	//if err := tst.Insert(".", 1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//rt.PrettyPrint(rtable)
-	//if err := rt.Remove(1); err != nil {
+	//rtable.PrettyPrint(tst.RTable)
+	//if err := tst.Remove(1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//rtable.PrettyPrint(rtable)
-	if rt.ValidFor(1, 4) {
+	//rtable.PrettyPrint(tst.RTable)
+	if tst.ValidFor(1, 4) {
 		fmt.Println("Valid from 1 to 4 :)")
 	}
 	// --TEST--
 
-	if rt.Valid() {
+	if tst.Valid() {
 		fmt.Println("It works :)")
 	} else {
 		fmt.Println("It fails :(")
 	}
 
 	// Build ParseTree
-	ptree.Build(rt)
+	ptree.Build(tst)
 }
