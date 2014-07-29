@@ -60,9 +60,9 @@ func (rt *RTable) Remove(pos int) error {
 	return nil
 }
 
-// Valid returns true if the recognition table is valid. This method
-// checks if the top left item is empty or not.
-func (rt *RTable) Valid() bool {
+// IsValid returns true if the recognition table is valid. This method
+// checks if the top right item is empty or not.
+func (rt *RTable) IsValid() bool {
 	if rt.GetItem(len(*rt)-1, 0).IsEmpty() != true {
 		return true
 	}
@@ -70,8 +70,8 @@ func (rt *RTable) Valid() bool {
 }
 
 // ValidFor returns true if the recognition table is valid for a given
-// range. This method checks if the top left item is empty or not.
-func (rt *RTable) ValidFor(beg, end int) bool {
+// range. This method checks if the top right item is empty or not.
+func (rt *RTable) IsValidFor(beg, end int) bool {
 	length := len(*rt)
 
 	if beg < 0 || beg >= length ||

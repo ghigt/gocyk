@@ -11,3 +11,27 @@ type GoCYK struct {
 	Tree    *ptree.PTree
 	Grammar *grm.Grammar
 }
+
+func New(grammar *grm.Grammar) *GoCYK {
+	return &GoCYK{
+		Table:   &rtable.RTable{},
+		Tree:    &ptree.PTree{},
+		Grammar: grammar,
+	}
+}
+
+func (g *GoCYK) Add(s string) error {
+	return nil
+}
+
+func (g *GoCYK) Insert(s string, pos int) error {
+	return nil
+}
+
+func (g *GoCYK) Remove(s string, pos int) error {
+	return nil
+}
+
+func (g *GoCYK) IsValid() bool {
+	return g.Table.IsValid()
+}
