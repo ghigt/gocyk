@@ -28,6 +28,5 @@ func (c *Column) String() string {
 	for _, item := range *c {
 		buf.WriteString(item.String() + " ")
 	}
-
 	return buf.String()
 }
