@@ -5,7 +5,11 @@
 */
 package rtable
 
-import "bytes"
+import (
+	"bytes"
+	"errors"
+	"fmt"
+)
 
 // RTable is the type of the recognition table.
 type RTable []*Column
@@ -21,6 +25,39 @@ func (rt *RTable) GetItem(column, index int) *Item {
 	c := (*rt).GetColumn(column)
 
 	return c.GetItem(index)
+}
+
+// Add adds a new column at the end of the recognition table
+func (rt *RTable) Add() *Column {
+	c := new(Column)
+	*rt = append(*rt, c)
+	return c
+}
+
+// Insert inserts a new column at give position of the recognition table.
+func (rt *RTable) Insert(pos int) (*Column, error) {
+	if pos < 0 || pos > len(*rt) {
+		return nil,
+			errors.New(fmt.Sprintf("index of table (%d) out of range", pos))
+	}
+	if pos == len(*rt) {
+		return rt.Add(), nil
+	}
+	c := new(Column)
+
+	*rt = append(*rt, nil)
+	copy((*rt)[pos+1:], (*rt)[pos:])
+	(*rt)[pos] = c
+	return c, nil
+}
+
+// Remove removes a column at give position of the recognition table.
+func (rt *RTable) Remove(pos int) error {
+	if pos < 0 || pos >= len(*rt) {
+		return errors.New(fmt.Sprintf("index of table (%d) out of range", pos))
+	}
+	(*rt) = append((*rt)[:pos], (*rt)[pos+1:]...)
+	return nil
 }
 
 // Valid returns true if the recognition table is valid. This method
