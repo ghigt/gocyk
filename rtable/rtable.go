@@ -7,7 +7,7 @@ package rtable
 
 import "bytes"
 
-// RTable is the type to build a recognition table.
+// RTable is the type of the recognition table.
 type RTable []*Column
 
 // GetColumn returns the column corresponding to the given parameter.
