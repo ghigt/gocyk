@@ -70,9 +70,9 @@ func main() {
 	//rtable.PrettyPrint(tst.RTable)
 	// --TEST--
 
-	//if cyk.IsValid() {
-	//	fmt.Println("It works :)")
-	//} else {
-	//	fmt.Println("It fails :(")
-	//}
+	if cyk.IsValid() {
+		fmt.Println("It works :)")
+	} else {
+		fmt.Println("It fails :(")
+	}
 }

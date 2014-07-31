@@ -25,11 +25,13 @@ func (g *GoCYK) Add(s string) error {
 }
 
 func (g *GoCYK) Insert(s string, pos int) error {
-	//var c *rtable.Column
+	var c *rtable.Column
 
-	if _, err := g.Table.Insert(pos); err != nil {
+	c, err := g.Table.Insert(pos)
+	if err != nil {
 		return err
 	}
+	g.CompleteColumn(s, c, pos)
 	return nil
 }
 
