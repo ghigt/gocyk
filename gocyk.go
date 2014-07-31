@@ -31,8 +31,8 @@ func (g *GoCYK) Insert(s string, pos int) error {
 	if err != nil {
 		return err
 	}
-	g.CompleteColumn(s, c, pos)
-	g.CompleteFollowing(pos)
+	g.completeColumn(s, c, pos)
+	g.completeFollowing(pos)
 	return nil
 }
 

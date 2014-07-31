@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -54,13 +55,13 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := cyk.Insert(".", 2); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := term.SetCap("cl"); err != nil {
-	//	fmt.Println(err)
-	//}
-	//rtable.PrettyPrint(cyk.Table)
+	if err := cyk.Insert(".", 2); err != nil {
+		log.Fatal(err)
+	}
+	if err := term.SetCap("cl"); err != nil {
+		fmt.Println(err)
+	}
+	rtable.PrettyPrint(cyk.Table)
 	//if err := tst.Remove(1); err != nil {
 	//	log.Fatal(err)
 	//}
