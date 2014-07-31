@@ -54,13 +54,13 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := tst.Insert(".", 1); err != nil {
+	//if err := cyk.Insert(".", 2); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//rtable.PrettyPrint(tst.RTable)
+	//rtable.PrettyPrint(cyk.Table)
 	//if err := tst.Remove(1); err != nil {
 	//	log.Fatal(err)
 	//}
