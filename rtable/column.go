@@ -15,9 +15,14 @@ func NewColumn(size int) *Column {
 	return &c
 }
 
-// GetItem returns the *Item present at the `index`.
-func (c *Column) GetItem(index int) *Item {
-	return (*c)[index]
+// GetItem returns the *Item present at the given position.
+func (c *Column) GetItem(pos int) *Item {
+	return (*c)[pos]
+}
+
+// SetItem set the *Item into the column at the given position.
+func (c *Column) SetItem(item *Item, pos int) {
+	(*c)[pos] = item
 }
 
 // AddFront adds a new item at the front of the column.
