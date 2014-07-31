@@ -16,15 +16,15 @@ func max(a, b int) int {
 // getStringTab returns a table of all the tokens of the recognition
 // table converted into strings.
 func getStringTab(rt *RTable) (*[][][]string, int) {
-	s := make([][][]string, len(*rt))
+	s := make([][][]string, rt.Size())
 	m := 1
 
 	for i := 0; i < len(s); i++ {
 		col := rt.GetColumn(i)
-		s[i] = make([][]string, len(*col))
+		s[i] = make([][]string, col.Size())
 		for ii := 0; ii < len(s[i]); ii++ {
 			item := col.GetItem(ii)
-			s[i][ii] = make([]string, len(*item))
+			s[i][ii] = make([]string, item.Size())
 			for iii := 0; iii < len(s[i][ii]); iii++ {
 				s[i][ii][iii] = string((*item)[iii])
 				m = max(len(s[i][ii][iii]), m)
@@ -46,7 +46,7 @@ func printToken(s string, max int) {
 // PrettyPrint prints a given recognition table.
 func PrettyPrint(rt *RTable) string {
 	s, m := getStringTab(rt)
-	length := len(*rt)
+	length := rt.Size()
 
 	fmt.Printf("+")
 	fmt.Printf(strings.Repeat("-", (m+1)*length-1))

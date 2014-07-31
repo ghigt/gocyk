@@ -25,10 +25,14 @@ func (item *Item) GetTokens() []grm.Token {
 
 // IsEmpty checks if the item is empty or not.
 func (item *Item) IsEmpty() bool {
-	if len(*item) == 0 {
+	if item.Size() == 0 {
 		return true
 	}
 	return false
+}
+
+func (item *Item) Size() int {
+	return len(*item)
 }
 
 func (item *Item) String() string {

@@ -21,10 +21,15 @@ func New(grammar *grm.Grammar) *GoCYK {
 }
 
 func (g *GoCYK) Add(s string) error {
-	return nil
+	return g.Insert(s, len(*g.Table))
 }
 
 func (g *GoCYK) Insert(s string, pos int) error {
+	//var c *rtable.Column
+
+	if _, err := g.Table.Insert(pos); err != nil {
+		return err
+	}
 	return nil
 }
 
