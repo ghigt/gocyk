@@ -16,13 +16,17 @@ After having a Go environment installed, just call `go get`:
 $ go get github.com/ghigt/gocyk
 ```
 
-Usage
+Example
 =====
 
-First, look at the grammar file `gram_cyk.go` and feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).  
-Then, launch the program with one parameter corresponding to the string to be parsed, for example `12.3e+1` for the default grammar (-v is the option to see the recognition tree in action):
+Look at the examples folder. A default grammar file is present. Feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).  
+Build the example like as follow:
 ```bash
-$ gocyk -v "12.3e+1"
+$ go build
+```
+Then, launch the program with one parameter corresponding to the string to be parsed, for example `12.3e+4` for the default grammar (-v is the option to see the recognition tree in action):
+```bash
+$ ./ex_num_gram -v "12.3e+4"
 
 +--------------------------------------------------------------+
 |Digit   |Number  |        |Number  |        |        |Number  |

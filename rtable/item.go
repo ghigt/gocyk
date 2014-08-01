@@ -9,7 +9,7 @@ import (
 // Item type represents a slice of tokens for the recognition table.
 type Item []grm.Token
 
-// Add adds multiple token at the end of the item.
+// Add adds multiple tokens at the end of the item.
 func (item *Item) Add(t ...grm.Token) *Item {
 	if item == nil {
 		item = new(Item)
@@ -25,10 +25,15 @@ func (item *Item) GetTokens() []grm.Token {
 
 // IsEmpty checks if the item is empty or not.
 func (item *Item) IsEmpty() bool {
-	if len(*item) == 0 {
+	if item.Size() == 0 {
 		return true
 	}
 	return false
+}
+
+// Size return the size the item.
+func (item *Item) Size() int {
+	return len(*item)
 }
 
 func (item *Item) String() string {

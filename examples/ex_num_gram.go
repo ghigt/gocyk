@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ghigt/gocyk/ptree"
+	"github.com/ghigt/gocyk"
 	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
@@ -19,7 +19,7 @@ var (
 
 func main() {
 	var input string
-	rt := rtable.New(&grammar)
+	cyk := gocyk.New(&grammar)
 
 	flag.Parse()
 
@@ -39,13 +39,13 @@ func main() {
 	scanner.Split(bufio.ScanBytes)
 
 	for i := 0; scanner.Scan(); i++ {
-		rt.Add(scanner.Text())
+		cyk.Add(scanner.Text())
 		if *verbose {
 			// clear screen
 			if err := term.SetCap("cl"); err != nil {
 				fmt.Println(err)
 			}
-			rtable.PrettyPrint(rt)
+			rtable.PrettyPrint(cyk.Table)
 			time.Sleep(500 * time.Millisecond)
 		}
 	}
@@ -54,31 +54,25 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := rt.Insert(".", 1); err != nil {
+	//if err := cyk.Insert(".", 1); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//rt.PrettyPrint(rtable)
-	//if err := rt.Remove(1); err != nil {
+	//rtable.PrettyPrint(cyk.Table)
+	//if err := cyk.Remove(0); err != nil {
 	//	log.Fatal(err)
 	//}
 	//if err := term.SetCap("cl"); err != nil {
 	//	fmt.Println(err)
 	//}
-	//rtable.PrettyPrint(rtable)
-	if rt.ValidFor(1, 4) {
-		fmt.Println("Valid from 1 to 4 :)")
-	}
+	//rtable.PrettyPrint(cyk.Table)
 	// --TEST--
 
-	if rt.Valid() {
+	if cyk.IsValid() {
 		fmt.Println("It works :)")
 	} else {
 		fmt.Println("It fails :(")
 	}
-
-	// Build ParseTree
-	ptree.Build(rt)
 }

@@ -1,7 +1,5 @@
-/*
-  Package ptree manipulates the parsing tree after generation
-  of a recognition table.
-*/
+// Package ptree manipulates the parsing tree after generation
+// of a recognition table.
 package ptree
 
 import (
