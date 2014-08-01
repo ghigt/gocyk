@@ -45,6 +45,9 @@ func printToken(s string, max int) {
 
 // PrettyPrint prints a given recognition table.
 func PrettyPrint(rt *RTable) string {
+	if rt.Size() == 0 {
+		return ""
+	}
 	s, m := getStringTab(rt)
 	length := rt.Size()
 

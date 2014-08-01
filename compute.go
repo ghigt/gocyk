@@ -21,9 +21,7 @@ func (g *GoCYK) completeColumn(s string, c *rtable.Column, pos int) {
 	}
 }
 
-// CompleteColumnFrom fills the recognition table at the given position
-// with the appropriate items from the position `col` until the end of
-// the table.
+// completeColumnFrom recompute the column from a given position of index.
 func (g *GoCYK) completeColumnFrom(pos, col int) {
 	c := g.Table.GetColumn(col)
 	for i := pos; i >= 0; i-- {
@@ -38,11 +36,22 @@ func (g *GoCYK) completeColumnFrom(pos, col int) {
 	}
 }
 
-// CompleteFollowing recompute the items in the recognition table from
-// the given position  until the end of the table.
-func (g *GoCYK) completeFollowing(pos int) {
+// insertFollowing add a new item at the front of the right-hand of the
+// position and recompute the items in the recognition table from
+// the given position until the end of the table.
+func (g *GoCYK) insertFollowing(pos int) {
 	for col := pos + 1; col < g.Table.Size(); col++ {
 		g.Table.GetColumn(col).AddFront(&rtable.Item{})
 		g.completeColumnFrom(pos, col)
+	}
+}
+
+// removeFollowing removes the first item of the right-hand of the
+// position and computes the rest each item until the end and modify
+// it appropriately. It also modifies only from a given position.
+func (g *GoCYK) removeFollowing(pos int) {
+	for col := pos; col < g.Table.Size(); col++ {
+		g.Table.GetColumn(col).Remove(0)
+		g.completeColumnFrom(pos-1, col)
 	}
 }

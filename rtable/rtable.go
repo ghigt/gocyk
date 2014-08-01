@@ -67,10 +67,10 @@ func (rt *RTable) Size() int {
 // IsValid returns true if the recognition table is valid. This method
 // checks if the top right item is empty or not.
 func (rt *RTable) IsValid() bool {
-	if rt.GetItem(rt.Size()-1, 0).IsEmpty() != true {
-		return true
+	if rt.Size() == 0 || rt.GetItem(rt.Size()-1, 0).IsEmpty() == true {
+		return false
 	}
-	return false
+	return true
 }
 
 // ValidFor returns true if the recognition table is valid for a given

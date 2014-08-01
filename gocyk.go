@@ -21,22 +21,24 @@ func New(grammar *grm.Grammar) *GoCYK {
 }
 
 func (g *GoCYK) Add(s string) error {
-	return g.Insert(s, len(*g.Table))
+	return g.Insert(s, g.Table.Size())
 }
 
 func (g *GoCYK) Insert(s string, pos int) error {
-	var c *rtable.Column
-
 	c, err := g.Table.Insert(pos)
 	if err != nil {
 		return err
 	}
 	g.completeColumn(s, c, pos)
-	g.completeFollowing(pos)
+	g.insertFollowing(pos)
 	return nil
 }
 
-func (g *GoCYK) Remove(s string, pos int) error {
+func (g *GoCYK) Remove(pos int) error {
+	if err := g.Table.Remove(pos); err != nil {
+		return err
+	}
+	g.removeFollowing(pos)
 	return nil
 }
 
