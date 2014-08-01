@@ -31,6 +31,7 @@ func (item *Item) IsEmpty() bool {
 	return false
 }
 
+// Size return the size the item.
 func (item *Item) Size() int {
 	return len(*item)
 }

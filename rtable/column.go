@@ -2,16 +2,17 @@ package rtable
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 )
 
 // Column type manages each column of the table package
 type Column []*Item
 
-// New returns a *Column initialized with a given size of items
+// NewColumn returns a *Column initialized with a given size of items
 func NewColumn(size int) *Column {
-	var c Column = make([]*Item, size)
+	var c Column
+
+	c = make([]*Item, size)
 	return &c
 }
 
@@ -35,13 +36,13 @@ func (c *Column) AddFront(item *Item) {
 // Remove removes the first item of the column.
 func (c *Column) Remove(pos int) error {
 	if pos < 0 || pos >= c.Size() {
-		return errors.New(fmt.Sprintf("index of column (%d) out of range",
-			pos))
+		return fmt.Errorf("index of column (%d) out of range", pos)
 	}
 	(*c) = append((*c)[:pos], (*c)[pos+1:]...)
 	return nil
 }
 
+// Size returns the size of the column.
 func (c *Column) Size() int {
 	return len(*c)
 }

@@ -1,13 +1,8 @@
-/*
-  Package rtable manages and create a recognition table following
-  the rules of the CYK (Cocke Younger Kasami) algorithm with a
-  CNF (Chomsky Normal Form) grammar.
-*/
+// Package rtable represents the recognition table
 package rtable
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 )
 
@@ -37,8 +32,7 @@ func (rt *RTable) Add() *Column {
 // Insert inserts a new column at give position of the recognition table.
 func (rt *RTable) Insert(pos int) (*Column, error) {
 	if pos < 0 || pos > rt.Size() {
-		return nil,
-			errors.New(fmt.Sprintf("index of table (%d) out of range", pos))
+		return nil, fmt.Errorf("index of table (%d) out of range", pos)
 	}
 	if pos == rt.Size() {
 		return rt.Add(), nil
@@ -54,12 +48,13 @@ func (rt *RTable) Insert(pos int) (*Column, error) {
 // Remove removes a column at give position of the recognition table.
 func (rt *RTable) Remove(pos int) error {
 	if pos < 0 || pos >= rt.Size() {
-		return errors.New(fmt.Sprintf("index of table (%d) out of range", pos))
+		return fmt.Errorf("index of table (%d) out of range", pos)
 	}
 	(*rt) = append((*rt)[:pos], (*rt)[pos+1:]...)
 	return nil
 }
 
+// Size returns the size of the recognition table.
 func (rt *RTable) Size() int {
 	return len(*rt)
 }
@@ -73,7 +68,7 @@ func (rt *RTable) IsValid() bool {
 	return true
 }
 
-// ValidFor returns true if the recognition table is valid for a given
+// IsValidFor returns true if the recognition table is valid for a given
 // range. This method checks if the top right item is empty or not.
 func (rt *RTable) IsValidFor(beg, end int) bool {
 	length := rt.Size()
