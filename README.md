@@ -11,7 +11,7 @@ The given result recognition table is a merge between these two resources:
 Installation
 =====
 
-After having a Go environment installed, just call `go get`:
+After having a Go environment installed, just call:
 ```bash
 $ go get github.com/ghigt/gocyk
 ```
@@ -20,12 +20,10 @@ Example
 =====
 
 Look at the examples folder. A default grammar file is present. Feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).  
-Build the example like as follow:
+Launch the program with one parameter corresponding to the string to be parsed, for example `12.3e+4` for the default grammar (-v is the option to see the recognition tree in action):
 ```bash
+$ cd examples
 $ go build
-```
-Then, launch the program with one parameter corresponding to the string to be parsed, for example `12.3e+4` for the default grammar (-v is the option to see the recognition tree in action):
-```bash
 $ ./ex_num_gram -v "12.3e+4"
 
 +--------------------------------------------------------------+
@@ -53,3 +51,4 @@ $ ./ex_num_gram -v "12.3e+4"
                                                       +--------+
 It works :)
 ```
+Uncomment the `Insert()` and `Remove()` lines to see the incremental parsing in action.
