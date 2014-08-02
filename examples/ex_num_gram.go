@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/ghigt/gocyk"
+	"github.com/ghigt/gocyk/ptree"
 	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
@@ -70,9 +71,25 @@ func main() {
 	//rtable.PrettyPrint(cyk.Table)
 	// --TEST--
 
+	for _, t := range cyk.BuildTrees() {
+		printTree(t)
+	}
+
 	if cyk.IsValid() {
 		fmt.Println("It works :)")
 	} else {
 		fmt.Println("It fails :(")
+	}
+}
+
+func printTree(t *ptree.PTree) {
+	fmt.Println(t.Value)
+	fmt.Println("Left --")
+	if t.Left != nil {
+		printTree(t.Left)
+	}
+	fmt.Println("Right --")
+	if t.Right != nil {
+		printTree(t.Right)
 	}
 }

@@ -21,12 +21,12 @@ func (NonTerminal) GetToken() (Token, bool) {
 
 // GetLeft returns the left symbol of the right-hand side rule.
 func (nt NonTerminal) GetLeft() (Token, bool) {
-	return nt.Right, true
+	return nt.Left, true
 }
 
 // GetRight returns the right symbol of the right-hand side rule.
 func (nt NonTerminal) GetRight() (Token, bool) {
-	return nt.Left, true
+	return nt.Right, true
 }
 
 // Terminal is the type representing the right-hand side
