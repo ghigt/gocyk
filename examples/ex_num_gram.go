@@ -47,7 +47,7 @@ func main() {
 				fmt.Println(err)
 			}
 			rtable.PrettyPrint(cyk.Table)
-			time.Sleep(500 * time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -72,6 +72,7 @@ func main() {
 	// --TEST--
 
 	for _, t := range cyk.BuildTrees() {
+		fmt.Println()
 		printTree(t)
 	}
 
@@ -84,12 +85,12 @@ func main() {
 
 func printTree(t *ptree.PTree) {
 	fmt.Println(t.Value)
-	fmt.Println("Left --")
 	if t.Left != nil {
+		fmt.Println("-- Left")
 		printTree(t.Left)
 	}
-	fmt.Println("Right --")
 	if t.Right != nil {
+		fmt.Println("-- Right")
 		printTree(t.Right)
 	}
 }

@@ -19,17 +19,21 @@ func (g *GoCYK) checkRight(col int, row int, tok grm.Token) bool {
 }
 
 func (g *GoCYK) buildTree(tok grm.Token, row int, col int) *ptree.PTree {
-	for _, nt := range g.Grammar.GetListOfNT(tok) {
-		left, _ := nt.GetLeft()
-		right, _ := nt.GetRight()
-		for c := col - 1; c >= row; c-- {
-			if itm := g.Table.GetItem(c, row); itm.IsEmpty() != true {
-				for _, t := range itm.GetTokens() {
-					if t == left && g.checkRight(col, c+1, right) {
-						pt := ptree.New(tok)
-						pt.Left = g.buildTree(left, row, c)
-						pt.Right = g.buildTree(right, c+1, col)
-						return pt
+	pt := ptree.New(tok)
+	if col == row {
+		return pt
+	} else {
+		for _, nt := range g.Grammar.GetListOfNT(tok) {
+			left, _ := nt.GetLeft()
+			right, _ := nt.GetRight()
+			for c := col - 1; c >= row; c-- {
+				if itm := g.Table.GetItem(c, row); itm.IsEmpty() != true {
+					for _, t := range itm.GetTokens() {
+						if t == left && g.checkRight(col, c+1, right) {
+							pt.Left = g.buildTree(left, row, c)
+							pt.Right = g.buildTree(right, c+1, col)
+							return pt
+						}
 					}
 				}
 			}
@@ -47,16 +51,11 @@ func (g *GoCYK) BuildTrees() []*ptree.PTree {
 		for ; col >= row; col-- {
 			itm := g.Table.GetItem(col, row)
 			if itm.IsEmpty() == false {
-				if col == row {
-					// Add Terminals
-					//tst.Grammar.GetListOfT()
-				} else {
-					for _, tok := range itm.GetTokens() {
-						if tree := g.buildTree(tok, row, col); tree != nil {
-							pts = append(pts, tree)
-						} else {
-							log.Fatal("nil Tree")
-						}
+				for _, tok := range itm.GetTokens() {
+					if tree := g.buildTree(tok, row, col); tree != nil {
+						pts = append(pts, tree)
+					} else {
+						log.Fatal("nil Tree")
 					}
 				}
 				break
