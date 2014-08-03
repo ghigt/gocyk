@@ -1,7 +1,6 @@
 package gocyk
 
 import (
-	"fmt"
 	"log"
 
 	grm "github.com/ghigt/gocyk/grammar"
@@ -20,7 +19,6 @@ func (g *GoCYK) checkRight(col int, row int, tok grm.Token) bool {
 }
 
 func (g *GoCYK) buildTree(tok grm.Token, row int, col int) *ptree.PTree {
-	fmt.Println("tok:", tok)
 	for _, nt := range g.Grammar.GetListOfNT(tok) {
 		left, _ := nt.GetLeft()
 		right, _ := nt.GetRight()
@@ -29,9 +27,8 @@ func (g *GoCYK) buildTree(tok grm.Token, row int, col int) *ptree.PTree {
 				for _, t := range itm.GetTokens() {
 					if t == left && g.checkRight(col, c+1, right) {
 						pt := ptree.New(tok)
-						fmt.Println("return:", tok)
 						pt.Left = g.buildTree(left, row, c)
-						pt.Right = g.buildTree(right, row, c)
+						pt.Right = g.buildTree(right, c+1, col)
 						return pt
 					}
 				}
@@ -55,7 +52,6 @@ func (g *GoCYK) BuildTrees() []*ptree.PTree {
 					//tst.Grammar.GetListOfT()
 				} else {
 					for _, tok := range itm.GetTokens() {
-						fmt.Println("plop")
 						if tree := g.buildTree(tok, row, col); tree != nil {
 							pts = append(pts, tree)
 						} else {
