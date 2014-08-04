@@ -2,6 +2,7 @@ package gocyk
 
 import (
 	"log"
+	"sync"
 
 	grm "github.com/ghigt/gocyk/grammar"
 	"github.com/ghigt/gocyk/ptree"
@@ -42,26 +43,42 @@ func (g *GoCYK) buildTree(tok grm.Token, row int, col int) *ptree.PTree {
 	return nil
 }
 
+func (g *GoCYK) intermediate(c chan *ptree.PTree, wg *sync.WaitGroup, tok grm.Token, row int, col int) {
+	defer (*wg).Done()
+	if tree := g.buildTree(tok, row, col); tree != nil {
+		c <- tree
+	} else {
+		log.Fatal("nil Tree")
+	}
+}
+
 func (g *GoCYK) BuildTrees() []*ptree.PTree {
 	size := g.Table.Size()
 	pts := []*ptree.PTree{}
+	c := make(chan *ptree.PTree)
+	var wg sync.WaitGroup
 
-	for row := 0; row < size; {
-		col := size - 1
-		for ; col >= row; col-- {
-			itm := g.Table.GetItem(col, row)
-			if itm.IsEmpty() == false {
-				for _, tok := range itm.GetTokens() {
-					if tree := g.buildTree(tok, row, col); tree != nil {
-						pts = append(pts, tree)
-					} else {
-						log.Fatal("nil Tree")
+	go func() {
+		for row := 0; row < size; {
+			col := size - 1
+			for ; col >= row; col-- {
+				itm := g.Table.GetItem(col, row)
+				if itm.IsEmpty() == false {
+					for _, tok := range itm.GetTokens() {
+						wg.Add(1)
+						go g.intermediate(c, &wg, tok, row, col)
 					}
+					break
 				}
-				break
 			}
+			row = col + 1
 		}
-		row = col + 1
+		wg.Wait()
+		close(c)
+	}()
+
+	for p := range c {
+		pts = append(pts, p)
 	}
 	return pts
 }
