@@ -52,3 +52,19 @@ $ ./ex_num_gram -v "12.3e+4"
 It works :)
 ```
 Uncomment the `Insert()` and `Remove()` lines to see the incremental parsing in action.
+
+It will also show the parsing tree which would look something like that with a better printer.
+```
+           __________Number_________
+          /                         \
+     ___N1___                      Scale
+    /        \                     /   \
+Integer    Integer               N2     Integer
+  |        /     \              / \       |
+  |     Digit Fraction        T2  Sign    |
+  |      |      /  \          |    |      |
+  |      |     T1  Integer    |    |      |
+  |      |     |     |        |    |      |
+
+  1      2     .     3        e    +      4
+```
