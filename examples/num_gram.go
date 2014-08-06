@@ -23,7 +23,7 @@ var grammar = grm.Grammar{
 		grm.NonTerminal{"T1", "Integer"},
 	},
 	"T1": {
-		".",
+		`\.`,
 	},
 	"Scale": {
 		grm.NonTerminal{"N2", "Integer"},
@@ -38,7 +38,6 @@ var grammar = grm.Grammar{
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
 	},
 	"Sign": {
-		"+",
-		"-",
+		`\+`, `\-`,
 	},
 }

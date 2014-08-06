@@ -2,6 +2,11 @@
 // and create a CNF (Chomsky Normal Form) grammar.
 package grammar
 
+import (
+	"fmt"
+	"regexp"
+)
+
 // Token type represent the symbol or a substring of
 // a grammar.
 type Token string
@@ -71,7 +76,7 @@ func (g *Grammar) GetTokensOfT(s string) (tokens []Token) {
 	for t, rules := range *g {
 		for _, r := range rules {
 			v, ok := r.(string) // Terminal declared as type string
-			if ok && string(v) == s {
+			if ok && IsRegEq(v, s) {
 				tokens = append(tokens, t)
 			}
 		}
@@ -123,4 +128,14 @@ func (g *Grammar) GetListOfNT(t Token) (nt []*NonTerminal) {
 		}
 	}
 	return
+}
+
+// IsRegEq check if the `reg` match as a regular expression with
+// the value `val`.
+func IsRegEq(reg string, val string) bool {
+	exp := fmt.Sprintf("^%s$", reg)
+	res, _ := regexp.MatchString(exp, val)
+	fmt.Printf("match %q with %s: %v\n", exp, val, res)
+
+	return res
 }

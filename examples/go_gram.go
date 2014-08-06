@@ -20,24 +20,53 @@ func main ( ) {
 }
 
 */
-var grammar = grm.Grammar{
-	"Program": {grm.NonTerminal{"Pr1", "Function"}},
-	"Pr1":     {grm.NonTerminal{"Package", "Import"}},
+var grammarGo = grm.Grammar{
+	"Program": {grm.NonTerminal{"Head", "Func"}},
+	"Head":    {grm.NonTerminal{"Package", "Import"}},
+
 	// Package
-	"Package": {grm.NonTerminal{"Pa1", "Alpha"}},
-	"Pa1":     {"package"},
+	"Package": {grm.NonTerminal{"PaDef", "Alpha"}},
+	"PaDef":   {"package"},
+
 	// Import
-	"Import": {grm.NonTerminal{"Im1", "Paren"}},
-	"Im1":    {"import"},
-	// Function
-	"Function": {"func"},
+	"Import": {grm.NonTerminal{"ImDef", "Paren"}},
+	"ImDef":  {"import"},
+
 	// Parenthesis
-	"Paren":  {grm.NonTerminal{"Par1", "PClose"}},
-	"Par1":   {grm.NonTerminal{"POpen", "Text"}},
-	"POpen":  {"("},
-	"PClose": {")"},
+	"Paren": {grm.NonTerminal{"Par1", "PClose"}},
+	"Par1":  {grm.NonTerminal{"POpen", "MulTex"}},
+	"MulTex": {
+		`"[a-z]+"`,
+		grm.NonTerminal{"MulTex", "Text"},
+	},
+	"POpen":  {`\(`},
+	"PClose": {`\)`},
+
+	// Function
+	"Func":   {grm.NonTerminal{"BodyDef", "CloseF"}},
+	"FuHead": {grm.NonTerminal{"FuDec", "OpenF"}},
+	"FuDec":  {grm.NonTerminal{"FuDe", "PClose"}},
+	"FuDe":   {grm.NonTerminal{"FuOp", "POpen"}},
+	"FuOp":   {grm.NonTerminal{"FuDef", "Alpha"}},
+	"FuDef":  {"func"},
+	"OpenF":  {`\{`},
+	"CloseF": {`\}`},
+
+	// Body
+	"BodyDef": {grm.NonTerminal{"FuHead", "Var"}},
+
+	// Var
+	"Var":    {grm.NonTerminal{"VarDec", "Type"}},
+	"VarDec": {grm.NonTerminal{"VarDef", "Alpha"}},
+	"VarDef": {"var"},
+
+	// Type
+	"Type": {
+		"int", "string", "float",
+	},
 	// Text
-	"Text": {`^"[a-z]+"$`},
+	"Text": {`"[a-z]+"`},
+
 	// Alphabet
-	"Alpha": {"^[a-z]+$"},
+	"Alpha": {"[a-z]+"},
 }

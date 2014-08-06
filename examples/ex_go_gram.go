@@ -20,7 +20,7 @@ var (
 
 func main() {
 	var input string
-	cyk := gocyk.New(&grammar)
+	cyk := gocyk.New(&grammarGo)
 
 	flag.Parse()
 
@@ -37,7 +37,7 @@ func main() {
 	}
 
 	scanner := bufio.NewScanner(strings.NewReader(input))
-	scanner.Split(bufio.ScanBytes)
+	scanner.Split(bufio.ScanWords)
 
 	for i := 0; scanner.Scan(); i++ {
 		cyk.Add(scanner.Text())
@@ -47,7 +47,7 @@ func main() {
 				fmt.Println(err)
 			}
 			rtable.PrettyPrint(cyk.Table)
-			time.Sleep(500 * time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}
 	if err := scanner.Err(); err != nil {
