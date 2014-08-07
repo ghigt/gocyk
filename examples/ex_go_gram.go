@@ -80,6 +80,7 @@ func main() {
 		fmt.Println("It works :)")
 	} else {
 		fmt.Println("It fails :(")
+		os.Exit(1)
 	}
 }
 
