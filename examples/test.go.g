@@ -5,8 +5,10 @@ import (
 	"strconv"
 )
 
-func main (  ) { 
+func main ( ) { 
 
-        var toto int
+        if test == "test" {
+
+        }
 
 }
