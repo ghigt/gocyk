@@ -49,17 +49,26 @@ var grammarGo = grm.Grammar{
 	"PClose": {`\)`},
 
 	// Function
-	"Func":   {grm.NonTerminal{"BodyFun", "FClose"}},
-	"FuHead": {grm.NonTerminal{"FuDec", "FOpen"}},
-	"FuDec":  {grm.NonTerminal{"FuDe", "PClose"}},
-	"FuDe":   {grm.NonTerminal{"FuOp", "POpen"}},
-	"FuOp":   {grm.NonTerminal{"FuDef", "Alpha"}},
-	"FuDef":  {"func"},
-	"FOpen":  {`\{`},
-	"FClose": {`\}`},
+	"Func": {
+		grm.NonTerminal{"BodyFun", "FClose"},
+		grm.NonTerminal{"FuHead", "FClose"},
+	},
+	"BodyFun": {grm.NonTerminal{"FuHead", "Inst"}},
+	"FuHead":  {grm.NonTerminal{"FuDec", "FOpen"}},
+	"FuDec":   {grm.NonTerminal{"FuDe", "PClose"}},
+	"FuDe":    {grm.NonTerminal{"FuOp", "POpen"}},
+	"FuOp":    {grm.NonTerminal{"FuDef", "Alpha"}},
+	"FuDef":   {"func"},
+	"FOpen":   {`\{`},
+	"FClose":  {`\}`},
 
-	// Body
-	"BodyFun": {grm.NonTerminal{"FuHead", "If"}},
+	// Instruction
+	"Inst": {
+		grm.NonTerminal{"VarDec", "Type"}, // Var
+		grm.NonTerminal{"Inst", "Var"},
+		grm.NonTerminal{"IfDec", "FClose"}, // If
+		grm.NonTerminal{"Inst", "If"},
+	},
 
 	// If
 	"If":    {grm.NonTerminal{"IfDec", "FClose"}},
@@ -74,7 +83,7 @@ var grammarGo = grm.Grammar{
 
 	// Var
 	"Var":    {grm.NonTerminal{"VarDec", "Type"}},
-	"VarDec": {grm.NonTerminal{"VarDef", "Val"}},
+	"VarDec": {grm.NonTerminal{"VarDef", "Alpha"}},
 	"VarDef": {"var"},
 
 	// Value
