@@ -135,7 +135,6 @@ func (g *Grammar) GetListOfNT(t Token) (nt []*NonTerminal) {
 func IsRegEq(reg string, val string) bool {
 	exp := fmt.Sprintf("^%s$", reg)
 	res, _ := regexp.MatchString(exp, val)
-	fmt.Printf("match %q with %s: %v\n", exp, val, res)
 
 	return res
 }

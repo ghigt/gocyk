@@ -9,13 +9,14 @@ import (
 	"github.com/ghigt/gocyk/rtable"
 )
 
-// GoCYK type contains the recognition table, the parsing tree
-// and the grammar. It provides methods to abstract the
-// calculation of the CYK algorithm to modify the parsing text.
+// GoCYK type contains the recognition table, the parsing tree,
+// the grammar and the substrings. It provides methods to abstract
+// the calculation of the CYK algorithm to modify the parsing text.
 type GoCYK struct {
 	Table   *rtable.RTable
 	Tree    *ptree.PTree
 	Grammar *grm.Grammar
+	Sub     []string
 }
 
 // New instanciate a GoCYK structure and returns its address.
@@ -30,6 +31,7 @@ func New(grammar *grm.Grammar) *GoCYK {
 // Add adds a new substring at the end then recalculate the
 // recognition table and the parsing tree.
 func (g *GoCYK) Add(s string) error {
+	g.Sub = append(g.Sub, s)
 	return g.Insert(s, g.Table.Size())
 }
 
@@ -40,6 +42,9 @@ func (g *GoCYK) Insert(s string, pos int) error {
 	if err != nil {
 		return err
 	}
+	g.Sub = append(g.Sub, "")
+	copy(g.Sub[pos+1:], g.Sub[pos:])
+	g.Sub[pos] = s
 	g.completeColumn(s, c, pos)
 	g.insertFollowing(pos)
 	return nil
@@ -51,6 +56,7 @@ func (g *GoCYK) Remove(pos int) error {
 	if err := g.Table.Remove(pos); err != nil {
 		return err
 	}
+	g.Sub = append(g.Sub[:pos], g.Sub[pos+1:]...)
 	g.removeFollowing(pos)
 	return nil
 }

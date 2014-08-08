@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/ghigt/gocyk"
-	"github.com/ghigt/gocyk/ptree"
 	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
@@ -55,42 +55,25 @@ func main() {
 	}
 
 	// --TEST--
-	//if err := cyk.Insert(".", 1); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := term.SetCap("cl"); err != nil {
-	//	fmt.Println(err)
-	//}
-	//rtable.PrettyPrint(cyk.Table)
-	//if err := cyk.Remove(0); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := term.SetCap("cl"); err != nil {
-	//	fmt.Println(err)
-	//}
-	//rtable.PrettyPrint(cyk.Table)
-	// --TEST--
-
-	for _, t := range cyk.BuildTrees() {
-		fmt.Println()
-		printTree(t)
+	if err := cyk.Insert(".", 1); err != nil {
+		log.Fatal(err)
 	}
+	if err := term.SetCap("cl"); err != nil {
+		fmt.Println(err)
+	}
+	rtable.PrettyPrint(cyk.Table)
+	if err := cyk.Remove(0); err != nil {
+		log.Fatal(err)
+	}
+	if err := term.SetCap("cl"); err != nil {
+		fmt.Println(err)
+	}
+	rtable.PrettyPrint(cyk.Table)
+	// --TEST--
 
 	if cyk.IsValid() {
 		fmt.Println("It works :)")
 	} else {
-		fmt.Println("It fails :(")
-	}
-}
-
-func printTree(t *ptree.PTree) {
-	fmt.Println(t.Value)
-	if t.Left != nil {
-		fmt.Println("-- Left")
-		printTree(t.Left)
-	}
-	if t.Right != nil {
-		fmt.Println("-- Right")
-		printTree(t.Right)
+		log.Fatal("It fails :(")
 	}
 }
