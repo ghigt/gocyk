@@ -22,10 +22,18 @@ func main ( ) {
 */
 var grammarGo = grm.Grammar{
 	"Program": {
-		grm.NonTerminal{"Head", "Func"},
-		grm.NonTerminal{"Package", "Func"},
+		grm.NonTerminal{"PaDef", "Alpha"},  // Package alone
+		grm.NonTerminal{"Head", "MulF"},    // P+I+MulF
+		grm.NonTerminal{"Package", "MulF"}, // Only Package and MulF
 	},
 	"Head": {grm.NonTerminal{"Package", "Import"}},
+
+	"MulF": {
+		grm.NonTerminal{"BodyFun", "FClose"}, // Copy Func
+		grm.NonTerminal{"FuHead", "FClose"},  // Copy Func
+
+		grm.NonTerminal{"MulF", "Func"},
+	},
 
 	// Package
 	"Package": {grm.NonTerminal{"PaDef", "Alpha"}},
@@ -42,7 +50,7 @@ var grammarGo = grm.Grammar{
 	},
 	"Par1": {grm.NonTerminal{"POpen", "MulTex"}},
 	"MulTex": {
-		`"[a-z]+"`, // Text
+		`"[a-z]+"`, // Copty Text
 		grm.NonTerminal{"MulTex", "Text"},
 	},
 	"POpen":  {`\(`},
@@ -50,8 +58,8 @@ var grammarGo = grm.Grammar{
 
 	// Function
 	"Func": {
-		grm.NonTerminal{"BodyFun", "FClose"},
-		grm.NonTerminal{"FuHead", "FClose"}, // eg. `func main() {}`
+		grm.NonTerminal{"BodyFun", "FClose"}, // Func not empty
+		grm.NonTerminal{"FuHead", "FClose"},  // eg. `func main() { }`
 	},
 	"FuHead": {grm.NonTerminal{"FuDec", "FOpen"}},
 	"FuDec":  {grm.NonTerminal{"FuDe", "PClose"}},
@@ -64,27 +72,35 @@ var grammarGo = grm.Grammar{
 	// Body
 	"BodyFun": {
 		grm.NonTerminal{"FuHead", "Inst"}, // for one or + instructions
-		grm.NonTerminal{"If", "Inst"},     //
+		grm.NonTerminal{"FuHead", "If"},   // for one if inst
+		grm.NonTerminal{"FuHead", "Var"},  // for one var inst
 	},
 
 	// Instruction
 	"Inst": {
+		grm.NonTerminal{"BodyIf", "FClose"}, // Copy If
+		grm.NonTerminal{"IfHead", "FClose"}, // Copy If
+
 		grm.NonTerminal{"VarDec", "Type"}, // Var
 		grm.NonTerminal{"Inst", "Var"},
-		grm.NonTerminal{"IfHead", "FClose"}, // If
 		grm.NonTerminal{"Inst", "If"},
 	},
 
 	// If
 	"If": {
-		grm.NonTerminal{"BodyFun", "FClose"},
-		grm.NonTerminal{"IfHead", "FClose"},
+		grm.NonTerminal{"BodyIf", "FClose"},
+		grm.NonTerminal{"IfHead", "FClose"}, // eg. `if test == "test" { }`
 	},
 	"IfHead": {grm.NonTerminal{"IfDec", "FOpen"}},
 	"IfDec":  {grm.NonTerminal{"IfOp", "Val"}},
 	"IfOp":   {grm.NonTerminal{"IfDV", "Comp"}},
 	"IfDV":   {grm.NonTerminal{"IfDef", "Alpha"}},
 	"IfDef":  {"if"},
+
+	// BodyIf
+	"BodyIf": {
+		grm.NonTerminal{"IfHead", "Inst"}, //
+	},
 
 	// Comparator
 	"Comp": {"==", "!=", ">=", "<="},
