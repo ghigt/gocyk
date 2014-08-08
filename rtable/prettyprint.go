@@ -43,8 +43,18 @@ func printToken(s string, max int) {
 	}
 }
 
+func printSub(sub []string, max int) {
+	fmt.Printf("+%s+\n", strings.Repeat("-", len(sub)*max+len(sub)-1))
+	fmt.Printf("|")
+	for _, s := range sub {
+		printToken(s, max)
+		fmt.Printf("|")
+	}
+	fmt.Printf("\n+%s+\n", strings.Repeat("-", len(sub)*max+len(sub)-1))
+}
+
 // PrettyPrint prints a given recognition table.
-func PrettyPrint(rt *RTable) string {
+func PrettyPrint(rt *RTable, sub []string) string {
 	if rt.Size() == 0 {
 		return ""
 	}
@@ -83,6 +93,8 @@ func PrettyPrint(rt *RTable) string {
 			fmt.Println("|")
 		}
 	}
+
+	printSub(sub, m)
 
 	return ""
 }

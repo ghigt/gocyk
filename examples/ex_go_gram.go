@@ -16,6 +16,9 @@ import (
 
 var (
 	verbose = flag.Bool("v", false, "Print recognition table")
+	clear   = flag.Bool("c", false, "Clear print")
+	sleep   = flag.Duration("s", 500*time.Millisecond,
+		"SleepTime before print")
 )
 
 func main() {
@@ -42,34 +45,18 @@ func main() {
 	for i := 0; scanner.Scan(); i++ {
 		cyk.Add(scanner.Text())
 		if *verbose {
-			// clear screen
-			if err := term.SetCap("cl"); err != nil {
-				fmt.Println(err)
+			if *clear {
+				if err := term.SetCap("cl"); err != nil {
+					fmt.Println(err)
+				}
 			}
-			rtable.PrettyPrint(cyk.Table)
-			time.Sleep(50 * time.Millisecond)
+			rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			time.Sleep(*sleep)
 		}
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
-
-	// --TEST--
-	//if err := cyk.Insert(".", 1); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := term.SetCap("cl"); err != nil {
-	//	fmt.Println(err)
-	//}
-	//rtable.PrettyPrint(cyk.Table)
-	//if err := cyk.Remove(0); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := term.SetCap("cl"); err != nil {
-	//	fmt.Println(err)
-	//}
-	//rtable.PrettyPrint(cyk.Table)
-	// --TEST--
 
 	for _, t := range cyk.BuildTrees() {
 		fmt.Println()

@@ -31,7 +31,6 @@ func New(grammar *grm.Grammar) *GoCYK {
 // Add adds a new substring at the end then recalculate the
 // recognition table and the parsing tree.
 func (g *GoCYK) Add(s string) error {
-	g.Sub = append(g.Sub, s)
 	return g.Insert(s, g.Table.Size())
 }
 

@@ -16,6 +16,8 @@ import (
 
 var (
 	verbose = flag.Bool("v", false, "Print recognition table")
+	sleep   = flag.Duration("s", 500*time.Millisecond,
+		"SleepTime before print")
 )
 
 func main() {
@@ -46,8 +48,8 @@ func main() {
 			if err := term.SetCap("cl"); err != nil {
 				fmt.Println(err)
 			}
-			rtable.PrettyPrint(cyk.Table)
-			time.Sleep(500 * time.Millisecond)
+			rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			time.Sleep(*sleep)
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -61,14 +63,15 @@ func main() {
 	if err := term.SetCap("cl"); err != nil {
 		fmt.Println(err)
 	}
-	rtable.PrettyPrint(cyk.Table)
+	rtable.PrettyPrint(cyk.Table, cyk.Sub)
 	if err := cyk.Remove(0); err != nil {
 		log.Fatal(err)
 	}
+	time.Sleep(*sleep)
 	if err := term.SetCap("cl"); err != nil {
 		fmt.Println(err)
 	}
-	rtable.PrettyPrint(cyk.Table)
+	rtable.PrettyPrint(cyk.Table, cyk.Sub)
 	// --TEST--
 
 	if cyk.IsValid() {
