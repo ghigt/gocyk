@@ -48,7 +48,8 @@ func main() {
 			if err := term.SetCap("cl"); err != nil {
 				fmt.Println(err)
 			}
-			rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			out := rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			fmt.Println(out)
 			time.Sleep(*sleep)
 		}
 	}
@@ -63,7 +64,8 @@ func main() {
 	if err := term.SetCap("cl"); err != nil {
 		fmt.Println(err)
 	}
-	rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	out := rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	fmt.Println(out)
 	if err := cyk.Remove(0); err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +73,8 @@ func main() {
 	if err := term.SetCap("cl"); err != nil {
 		fmt.Println(err)
 	}
-	rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	out = rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	fmt.Println(out)
 	// --TEST--
 
 	if cyk.IsValid() {

@@ -1,7 +1,7 @@
 package rtable
 
 import (
-	"fmt"
+	"bytes"
 	"strings"
 )
 
@@ -36,65 +36,69 @@ func getStringTab(rt *RTable) (*[][][]string, int) {
 
 // printToken prints a string followed by spaces corresponding to
 // the `max` parameter.
-func printToken(s string, max int) {
-	fmt.Printf(s)
+func printToken(s string, max int, buf *bytes.Buffer) {
+	buf.WriteString(s)
 	if l := len(s); l < max {
-		fmt.Printf(strings.Repeat(" ", max-l))
+		buf.WriteString(strings.Repeat(" ", max-l))
 	}
 }
 
-func printSub(sub []string, max int) {
-	fmt.Printf("+%s+\n", strings.Repeat("-", len(sub)*max+len(sub)-1))
-	fmt.Printf("|")
+func printSub(sub []string, max int, buf *bytes.Buffer) {
+	buf.WriteString("+" + strings.Repeat("-",
+		len(sub)*max+len(sub)-1) + "+\n")
+	buf.WriteString("|")
 	for _, s := range sub {
-		printToken(s, max)
-		fmt.Printf("|")
+		printToken(s, max, buf)
+		buf.WriteString("|")
 	}
-	fmt.Printf("\n+%s+\n", strings.Repeat("-", len(sub)*max+len(sub)-1))
+	buf.WriteString("\n+" + strings.Repeat("-",
+		len(sub)*max+len(sub)-1) + "+\n")
 }
 
 // PrettyPrint prints a given recognition table.
 func PrettyPrint(rt *RTable, sub []string) string {
+	var buf bytes.Buffer
+
 	if rt.Size() == 0 {
 		return ""
 	}
 	s, m := getStringTab(rt)
 	length := rt.Size()
 
-	fmt.Printf("+")
-	fmt.Printf(strings.Repeat("-", (m+1)*length-1))
-	fmt.Println("+")
+	buf.WriteString("+")
+	buf.WriteString(strings.Repeat("-", (m+1)*length-1))
+	buf.WriteString("+\n")
 	for row := 0; row < length; row++ {
 		l := 1
 		for tok := 0; tok < l; tok++ {
-			fmt.Printf(strings.Repeat(" ", (m+1)*row))
-			fmt.Printf("|")
+			buf.WriteString(strings.Repeat(" ", (m+1)*row))
+			buf.WriteString("|")
 			for col := row; col < length; col++ {
 				if len((*s)[col][row]) == 0 {
-					printToken("", m)
+					printToken("", m, &buf)
 				} else if tok == 0 {
 					l = max(len((*s)[col][row]), l)
-					printToken((*s)[col][row][0], m)
+					printToken((*s)[col][row][0], m, &buf)
 				} else if tok < len((*s)[col][row]) {
-					printToken((*s)[col][row][tok], m)
+					printToken((*s)[col][row][tok], m, &buf)
 				} else {
-					printToken("", m)
+					printToken("", m, &buf)
 				}
-				fmt.Printf("|")
+				buf.WriteString("|")
 			}
-			fmt.Println()
+			buf.WriteString("\n")
 		}
-		fmt.Printf(strings.Repeat(" ", (m+1)*row))
-		fmt.Printf("+")
-		fmt.Printf(strings.Repeat("-", (m+1)*(length-row)-1))
+		buf.WriteString(strings.Repeat(" ", (m+1)*row))
+		buf.WriteString("+")
+		buf.WriteString(strings.Repeat("-", (m+1)*(length-row)-1))
 		if row+1 == length {
-			fmt.Println("+")
+			buf.WriteString("+\n")
 		} else {
-			fmt.Println("|")
+			buf.WriteString("|\n")
 		}
 	}
 
-	printSub(sub, m)
+	printSub(sub, m, &buf)
 
-	return ""
+	return buf.String()
 }

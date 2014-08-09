@@ -50,7 +50,8 @@ func main() {
 					fmt.Println(err)
 				}
 			}
-			rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			out := rtable.PrettyPrint(cyk.Table, cyk.Sub)
+			fmt.Println(out)
 			time.Sleep(*sleep)
 		}
 	}
