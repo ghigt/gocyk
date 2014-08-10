@@ -137,3 +137,9 @@ func main ( ) {
         }
 
 }
+
+func main ( ) { 
+
+        fmt . sdf ( sdf . df , "dsf" )
+
+}

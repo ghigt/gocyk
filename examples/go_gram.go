@@ -116,7 +116,7 @@ var grammarGo = grm.Grammar{
 		grm.NonTerminal{"CaHead", "PClose"},
 		grm.NonTerminal{"CaDec", "PClose"},
 	},
-	"CaHead": {grm.NonTerminal{"CaDec", "Val"}},
+	"CaHead": {grm.NonTerminal{"CaDec", "MulVal"}},
 	"CaDec":  {grm.NonTerminal{"MuCaD", "POpen"}},
 
 	"MuCaD": {
@@ -132,6 +132,23 @@ var grammarGo = grm.Grammar{
 	"Var":    {grm.NonTerminal{"VarDec", "Type"}},
 	"VarDec": {grm.NonTerminal{"VarDef", "Alpha"}},
 	"VarDef": {"var"},
+
+	// MulVal
+	"MulVal": {
+		`"[a-zA-Z]*"`, // Copy Val
+		`[a-zA-Z]+`,   // Copy Val
+		`[0-9]+`,      // Copy Val
+		grm.NonTerminal{"CaHead", "PClose"}, // Copy Val
+		grm.NonTerminal{"CaDec", "PClose"},  // Copy Val
+		`[a-zA-Z]+`,                         // Copy Val
+		grm.NonTerminal{"MCDP", "Alpha"},    // Copy Val
+
+		grm.NonTerminal{"MuVaC", "Val"},
+	},
+	"MuVaC": {grm.NonTerminal{"MulVal", "Comma"}},
+
+	// Comma
+	"Comma": {","},
 
 	// Value
 	"Val": {
