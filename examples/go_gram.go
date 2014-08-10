@@ -62,12 +62,27 @@ var grammarGo = grm.Grammar{
 		grm.NonTerminal{"FuHead", "FClose"},  // eg. `func main() { }`
 	},
 	"FuHead": {grm.NonTerminal{"FuDec", "FOpen"}},
-	"FuDec":  {grm.NonTerminal{"FuDe", "PClose"}},
+	"FuDec": {
+		grm.NonTerminal{"FuDe", "PClose"},  // ( )
+		grm.NonTerminal{"FuPar", "PClose"}, // ( ... )
+	},
+	"FuPar":  {grm.NonTerminal{"FuDe", "MulFP"}},
 	"FuDe":   {grm.NonTerminal{"FuOp", "POpen"}},
 	"FuOp":   {grm.NonTerminal{"FuDef", "Alpha"}},
 	"FuDef":  {"func"},
 	"FOpen":  {`\{`},
 	"FClose": {`\}`},
+
+	// Multiple Function Parameters
+	"MulFP": {
+		grm.NonTerminal{"Alpha", "Type"}, // Copy Param
+
+		grm.NonTerminal{"MuFPC", "Param"},
+	},
+	"MuFPC": {grm.NonTerminal{"MulFP", "Comma"}},
+
+	// Parameter
+	"Param": {grm.NonTerminal{"Alpha", "Type"}},
 
 	// Body
 	"BodyFun": {
