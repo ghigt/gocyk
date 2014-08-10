@@ -21,7 +21,7 @@ $ go get github.com/ghigt/gocyk
 Examples
 ========
 
-Look at the examples folder. A numeric grammar file is present. Feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).  
+Look at the examples folder. A numeric grammar file is present. Feel free to modify it. But be aware that it must respect the [CNF (Chomsky Normal Form)](http://en.wikipedia.org/wiki/Chomsky_normal_form).
 Launch the program with one parameter corresponding to the string to be parsed, for example `12.3e+4` for the numeric grammar. Several options can be used (-v is the option to see the recognition tree in action):
 ```bash
 $ cd examples
