@@ -65,14 +65,12 @@ func PrettyPrint(rt *RTable, sub []string) string {
 	s, m := getStringTab(rt)
 	length := rt.Size()
 
-	buf.WriteString("+")
-	buf.WriteString(strings.Repeat("-", (m+1)*length-1))
-	buf.WriteString("+\n")
+	buf.WriteString("+" + strings.Repeat("-",
+		(m+1)*length-1) + "+\n")
 	for row := 0; row < length; row++ {
 		l := 1
 		for tok := 0; tok < l; tok++ {
-			buf.WriteString(strings.Repeat(" ", (m+1)*row))
-			buf.WriteString("|")
+			buf.WriteString(strings.Repeat(" ", (m+1)*row) + "|")
 			for col := row; col < length; col++ {
 				if len((*s)[col][row]) == 0 {
 					printToken("", m, &buf)
@@ -88,9 +86,9 @@ func PrettyPrint(rt *RTable, sub []string) string {
 			}
 			buf.WriteString("\n")
 		}
-		buf.WriteString(strings.Repeat(" ", (m+1)*row))
-		buf.WriteString("+")
-		buf.WriteString(strings.Repeat("-", (m+1)*(length-row)-1))
+		buf.WriteString(strings.Repeat(" ",
+			(m+1)*row) + "+" + strings.Repeat("-",
+			(m+1)*(length-row)-1))
 		if row+1 == length {
 			buf.WriteString("+\n")
 		} else {

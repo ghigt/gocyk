@@ -50,7 +50,7 @@ var grammarGo = grm.Grammar{
 	},
 	"Par1": {grm.NonTerminal{"POpen", "MulTex"}},
 	"MulTex": {
-		`"[a-z]+"`, // Copty Text
+		`"[a-zA-Z]*"`, // Copty Text
 		grm.NonTerminal{"MulTex", "Text"},
 	},
 	"POpen":  {`\(`},
@@ -74,6 +74,7 @@ var grammarGo = grm.Grammar{
 		grm.NonTerminal{"FuHead", "Inst"}, // for one or + instructions
 		grm.NonTerminal{"FuHead", "If"},   // for one if inst
 		grm.NonTerminal{"FuHead", "Var"},  // for one var inst
+		grm.NonTerminal{"FuHead", "Call"}, // for one var inst
 	},
 
 	// Instruction
@@ -81,9 +82,14 @@ var grammarGo = grm.Grammar{
 		grm.NonTerminal{"BodyIf", "FClose"}, // Copy If
 		grm.NonTerminal{"IfHead", "FClose"}, // Copy If
 
-		grm.NonTerminal{"VarDec", "Type"}, // Var
+		grm.NonTerminal{"VarDec", "Type"}, // Copy Var
+
+		grm.NonTerminal{"CaHead", "PClose"}, // Copy Call
+		grm.NonTerminal{"CaDec", "PClose"},  // Copy Call
+
 		grm.NonTerminal{"Inst", "Var"},
 		grm.NonTerminal{"Inst", "If"},
+		grm.NonTerminal{"Inst", "Call"},
 	},
 
 	// If
@@ -99,11 +105,28 @@ var grammarGo = grm.Grammar{
 
 	// BodyIf
 	"BodyIf": {
-		grm.NonTerminal{"IfHead", "Inst"}, //
+		grm.NonTerminal{"IfHead", "Inst"},
 	},
 
 	// Comparator
 	"Comp": {"==", "!=", ">=", "<="},
+
+	// Call
+	"Call": {
+		grm.NonTerminal{"CaHead", "PClose"},
+		grm.NonTerminal{"CaDec", "PClose"},
+	},
+	"CaHead": {grm.NonTerminal{"CaDec", "Val"}},
+	"CaDec":  {grm.NonTerminal{"MuCaD", "POpen"}},
+
+	"MuCaD": {
+		`[a-zA-Z]+`, // Alpha
+		grm.NonTerminal{"MCDP", "Alpha"},
+	},
+	"MCDP": {grm.NonTerminal{"MuCaD", "Point"}},
+
+	// Point
+	"Point": {"."},
 
 	// Var
 	"Var":    {grm.NonTerminal{"VarDec", "Type"}},
@@ -112,8 +135,15 @@ var grammarGo = grm.Grammar{
 
 	// Value
 	"Val": {
-		`"[a-z]+"`, // Text
-		"Number",   // Not Implemented yet
+		`"[a-zA-Z]*"`, // Text
+		`[a-zA-Z]+`,   // Alpha
+		`[0-9]+`,      // Number
+
+		grm.NonTerminal{"CaHead", "PClose"}, // Copy Call
+		grm.NonTerminal{"CaDec", "PClose"},  // Copy Call
+
+		`[a-zA-Z]+`,                      // Copy MuCaD
+		grm.NonTerminal{"MCDP", "Alpha"}, // Copy MuCaD
 	},
 
 	// Type
@@ -121,8 +151,11 @@ var grammarGo = grm.Grammar{
 		"int", "string", "float",
 	},
 	// Text
-	"Text": {`"[a-z]+"`},
+	"Text": {`"[a-zA-Z]*"`},
 
 	// Alphabet
-	"Alpha": {"[a-z]+"},
+	"Alpha": {"[a-zA-Z]+"},
+
+	// Number (simple)
+	"Number": {`[0-9]+`},
 }
