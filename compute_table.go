@@ -8,14 +8,22 @@ func (g *GoCYK) completeColumn(s string, c *rtable.Column, pos int) {
 	for i := pos; i >= 0; i-- {
 		if i == pos {
 			item := c.GetItem(i)
-			c.SetItem(item.Add(g.Grammar.GetTokensOfT(s)...), i)
+			item = item.Create()
+			for _, t := range g.Grammar.GetTokensOfT(s) {
+				item = item.Add(t)
+			}
+			c.SetItem(item, i)
 		} else {
 			for l := i; l < pos; l++ {
 				item := c.GetItem(i)
-				c.SetItem(item.Add(g.Grammar.GetTokensOfNT(
+				item = item.Create()
+				for _, t := range g.Grammar.GetTokensOfNT(
 					g.Table.GetItem(l, i).GetTokens(),
-					g.Table.GetItem(pos, l+1).GetTokens(),
-				)...), i)
+					g.Table.GetItem(pos, l+1).GetTokens()) {
+
+					item = item.Add(t)
+				}
+				c.SetItem(item, i)
 			}
 		}
 	}
@@ -28,10 +36,14 @@ func (g *GoCYK) completeColumnFrom(pos, col int) {
 		c.SetItem(&rtable.Item{}, i)
 		for l := i; l < col; l++ {
 			item := c.GetItem(i)
-			c.SetItem(item.Add(g.Grammar.GetTokensOfNT(
+			item = item.Create()
+			for _, t := range g.Grammar.GetTokensOfNT(
 				g.Table.GetItem(l, i).GetTokens(),
-				g.Table.GetItem(col, l+1).GetTokens(),
-			)...), i)
+				g.Table.GetItem(col, l+1).GetTokens()) {
+
+				item = item.Add(t)
+			}
+			c.SetItem(item, i)
 		}
 	}
 }

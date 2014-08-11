@@ -115,7 +115,7 @@ var grammarGo = grm.Grammar{
 	"IfHead": {grm.NonTerminal{"IfDec", "FOpen"}},
 	"IfDec":  {grm.NonTerminal{"IfOp", "Val"}},
 	"IfOp":   {grm.NonTerminal{"IfDV", "Comp"}},
-	"IfDV":   {grm.NonTerminal{"IfDef", "Alpha"}},
+	"IfDV":   {grm.NonTerminal{"IfDef", "Val"}},
 	"IfDef":  {"if"},
 
 	// BodyIf
@@ -124,7 +124,7 @@ var grammarGo = grm.Grammar{
 	},
 
 	// Comparator
-	"Comp": {"==", "!=", ">=", "<="},
+	"Comp": {"==", "!=", ">=", "<=", ">", "<"},
 
 	// Call
 	"Call": {

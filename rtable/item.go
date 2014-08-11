@@ -9,12 +9,32 @@ import (
 // Item type represents a slice of tokens for the recognition table.
 type Item []grm.Token
 
+// Create instantiate a new item if it is nil.
+func (item *Item) Create() *Item {
+	if item == nil {
+		return new(Item)
+	}
+	return item
+}
+
+// IsPresent checks if the token is already present in the item.
+func (item *Item) IsPresent(t grm.Token) bool {
+	for _, i := range *item {
+		if i == t {
+			return true
+		}
+	}
+	return false
+}
+
 // Add adds multiple tokens at the end of the item.
-func (item *Item) Add(t ...grm.Token) *Item {
+func (item *Item) Add(t grm.Token) *Item {
 	if item == nil {
 		item = new(Item)
 	}
-	*item = append(*item, t...)
+	if !item.IsPresent(t) {
+		*item = append(*item, t)
+	}
 	return item
 }
 
