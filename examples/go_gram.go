@@ -124,7 +124,7 @@ var grammarGo = grm.Grammar{
 	},
 
 	// Comparator
-	"Comp": {"==", "!=", ">=", "<=", ">", "<"},
+	"Comp": {"==", "!=", ">=", "=", ">", "<"},
 
 	// Call
 	"Call": {

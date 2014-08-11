@@ -3,3 +3,4 @@ gocyk
 examples/examples
 examples/log
 examples/test/test
+tests/test
