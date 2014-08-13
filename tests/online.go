@@ -15,16 +15,15 @@ func computeBegOnline(input string) {
 	// Instantiate the library
 	cyk := gocyk.New(&grammarGo)
 
+	t := time.Now()
+
+	// Insert at the beginning
+	cyk.Add("package")
+
 	// Compute everything
 	for _, s := range sub {
 		cyk.Add(s)
 	}
-
-	// TO ADD AT THE END
-	t := time.Now()
-
-	// Insert at the beginning
-	cyk.Insert("package", 0)
 
 	// Build the Tree
 	cyk.BuildTrees()
@@ -49,16 +48,18 @@ func computeMidOnline(input string) {
 	// Instantiate the library
 	cyk := gocyk.New(&grammarGo)
 
+	var t time.Time
+
 	// Compute everything
-	for _, s := range sub {
+	for i, s := range sub {
+		if i == 35 {
+			t = time.Now()
+
+			// Insert in the middle
+			cyk.Add("if")
+		}
 		cyk.Add(s)
 	}
-
-	// TO ADD AT THE END
-	t := time.Now()
-
-	// Insert in the middle
-	cyk.Insert("if", 35)
 
 	// Build the Tree
 	cyk.BuildTrees()
@@ -88,7 +89,6 @@ func computeEndOnline(input string) {
 		cyk.Add(s)
 	}
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Add at the end

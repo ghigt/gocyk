@@ -41,7 +41,7 @@ func main() {
 	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Split(bufio.ScanBytes)
 
-	for i := 0; scanner.Scan(); i++ {
+	for scanner.Scan() {
 		cyk.Add(scanner.Text())
 		if *verbose {
 			// clear screen

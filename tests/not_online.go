@@ -12,19 +12,18 @@ func computeBegNotOnline(input string) {
 	// Scanning input
 	sub := scanning(input)
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Instantiate the library
 	cyk := gocyk.New(&grammarGo)
 
+	// Insert at the beginning
+	cyk.Add("package")
+
 	// Compute everything
 	for _, s := range sub {
 		cyk.Add(s)
 	}
-
-	// Insert at the beginning
-	cyk.Insert("package", 0)
 
 	// Build the Tree
 	cyk.BuildTrees()
@@ -46,7 +45,6 @@ func computeMidNotOnline(input string) {
 	// Scanning input
 	sub := scanning(input)
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Instantiate the library
@@ -79,7 +77,6 @@ func computeEndNotOnline(input string) {
 	// Scanning input
 	sub := scanning(input)
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Instantiate the library

@@ -20,7 +20,6 @@ func computeBegIncremental(input string) {
 		cyk.Add(s)
 	}
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Insert at the beginning
@@ -54,7 +53,6 @@ func computeMidIncremental(input string) {
 		cyk.Add(s)
 	}
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Insert in the middle
@@ -88,7 +86,6 @@ func computeEndIncremental(input string) {
 		cyk.Add(s)
 	}
 
-	// TO ADD AT THE END
 	t := time.Now()
 
 	// Add at the end
