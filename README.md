@@ -86,6 +86,19 @@ To test it, all you need is running this command line:
 $ go build -o tests *.go && ./tests -beg "`cat test_beg.go.g`" -mid "`cat test_mid.go.g`" -end "`cat test_end.go.g`"
 ```
 
+The result might normal look something like this:
+```bash
+computeBegNotOnline      :    1.109938532s    :    It works :)
+computeBegOnline         :    1.10281264s     :    It works :)
+computeBegIncremental    :    26.763131ms     :    It works :)
+computeMidNotOnline      :    1.679127562s    :    It works :)
+computeMidOnline         :    1.039250382s    :    It works :)
+computeMidIncremental    :    623.758154ms    :    It works :)
+computeEndNotOnline      :    1.112078578s    :    It works :)
+computeEndOnline         :    25.341187ms     :    It works :)
+computeEndIncremental    :    25.843226ms     :    It works :)
+```
+
 It uses a home made "go like" grammar in CNF available in `examples/go_gram.go`.
 
 Context
