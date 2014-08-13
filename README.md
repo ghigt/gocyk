@@ -71,9 +71,18 @@ Integer    Integer               N2     Integer
   1      2     .     3        e    +      4
 ```
 
-----------
+Tests
+=====
 
-Another example uses a little golang grammar. Look at the examples in the `examples/test/` folder.
+In order to test the difference between the time spent for the normal/online/incremental parsing algorithm, a bunch of tests has been made in the `tests/` directory.
+
+To test it, all you need is running this command line:
+
+```bash
+$ go build -o tests *.go && ./tests -beg "`cat test_beg.go.g`" -mid "`cat test_mid.go.g`" -end "`cat test_end.go.g`"
+```
+
+It uses a home made "go like" grammar in CNF available in `examples/go_gram.go`.
 
 Context
 =======
