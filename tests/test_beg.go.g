@@ -1,5 +1,5 @@
 
-package main
+ main
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ import (
 	"gocyk"
 )
 
-func main ( ) {
+func main ( str string ) {
 	var input string
 	var cyk int 
         gocyk . New ( grammarGo )
