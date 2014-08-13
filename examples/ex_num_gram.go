@@ -57,24 +57,24 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 
-	// --TEST--
-	if err := cyk.Insert(".", 1); err != nil {
-		log.Fatal(err)
-	}
-	if err := term.SetCap("cl"); err != nil {
-		fmt.Println(err)
-	}
-	out := rtable.PrettyPrint(cyk.Table, cyk.Sub)
-	fmt.Println(out)
-	if err := cyk.Remove(0); err != nil {
-		log.Fatal(err)
-	}
-	time.Sleep(*sleep)
-	if err := term.SetCap("cl"); err != nil {
-		fmt.Println(err)
-	}
-	out = rtable.PrettyPrint(cyk.Table, cyk.Sub)
-	fmt.Println(out)
+	// --INSERT TEST--
+	//if err := cyk.Insert(".", 1); err != nil {
+	//	log.Fatal(err)
+	//}
+	//if err := term.SetCap("cl"); err != nil {
+	//	fmt.Println(err)
+	//}
+	//out := rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	//fmt.Println(out)
+	//if err := cyk.Remove(0); err != nil {
+	//	log.Fatal(err)
+	//}
+	//time.Sleep(*sleep)
+	//if err := term.SetCap("cl"); err != nil {
+	//	fmt.Println(err)
+	//}
+	//out = rtable.PrettyPrint(cyk.Table, cyk.Sub)
+	//fmt.Println(out)
 	// --TEST--
 
 	if cyk.IsValid() {
