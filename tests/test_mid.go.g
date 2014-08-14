@@ -22,7 +22,7 @@ func main ( str string ) {
 		flag . Args (  )
 	}
 
-	bufio . NewScanner ( strings . NewReader ( input )
+	bufio . NewScanner ( strings . NewReader ( input ) )
 	scanner . Split ( bufio . ScanWords )
 
 	if err != nil {

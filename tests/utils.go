@@ -22,7 +22,7 @@ func getFile(name string, prefix string) []byte {
 }
 
 func echo(cyk *gocyk.GoCYK, t time.Duration, s string) {
-	fmt.Printf("%s\t:\t%v\t:\t", s, t)
+	fmt.Printf("%s\t:\t%v\t:\t%v\t:\t", s, cyk.Table.Size(), t)
 
 	// Check if it works
 	if cyk.IsValid() {

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/ghigt/gocyk"
+	"github.com/ghigt/gocyk/ptree"
 	"github.com/ghigt/gocyk/rtable"
 	"github.com/ghigt/gotd/term"
 )
@@ -58,7 +59,10 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 
-	cyk.BuildTrees()
+	for _, t := range cyk.BuildTrees() {
+		echo(t)
+		fmt.Println()
+	}
 
 	if cyk.IsValid() {
 		fmt.Println("It works :)")
@@ -66,4 +70,17 @@ func main() {
 		fmt.Println("It fails :(")
 		os.Exit(1)
 	}
+}
+
+func echo(t *ptree.PTree) {
+	fmt.Println(t.Value)
+	if t.Left != nil {
+		fmt.Println("< left")
+		echo(t.Left)
+	}
+	if t.Right != nil {
+		fmt.Println("< right")
+		echo(t.Right)
+	}
+	fmt.Println("-- end")
 }

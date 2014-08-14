@@ -141,7 +141,7 @@ var grammarGo = grm.Grammar{
 	"MCDP": {grm.NonTerminal{"MuCaD", "Point"}},
 
 	// Point
-	"Point": {"."},
+	"Point": {`\.`},
 
 	// Var
 	"Var":    {grm.NonTerminal{"VarDec", "Type"}},
