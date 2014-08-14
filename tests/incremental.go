@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ghigt/gocyk"
 )
 
-func computeBegIncremental(input string) {
+func computeBegIncremental(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -23,24 +22,17 @@ func computeBegIncremental(input string) {
 	t := time.Now()
 
 	// Insert at the beginning
-	cyk.Insert("package", 0)
+	cyk.Insert(file.Sub, file.Pos)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeBegIncremental\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeBegIncremental")
 }
 
-func computeMidIncremental(input string) {
+func computeMidIncremental(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -56,24 +48,17 @@ func computeMidIncremental(input string) {
 	t := time.Now()
 
 	// Insert in the middle
-	cyk.Insert("if", 35)
+	cyk.Insert(file.Sub, file.Pos)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeMidIncremental\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeMidIncremental")
 }
 
-func computeEndIncremental(input string) {
+func computeEndIncremental(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -89,19 +74,12 @@ func computeEndIncremental(input string) {
 	t := time.Now()
 
 	// Add at the end
-	cyk.Add("}")
+	cyk.Add(file.Sub)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeEndIncremental\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeEndIncremental")
 }

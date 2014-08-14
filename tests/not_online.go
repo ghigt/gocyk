@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ghigt/gocyk"
 )
 
-func computeBegNotOnline(input string) {
+func computeBegNotOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -18,7 +17,7 @@ func computeBegNotOnline(input string) {
 	cyk := gocyk.New(&grammarGo)
 
 	// Insert at the beginning
-	cyk.Add("package")
+	cyk.Add(file.Sub)
 
 	// Compute everything
 	for _, s := range sub {
@@ -28,19 +27,12 @@ func computeBegNotOnline(input string) {
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeBegNotOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeBegNotOnline")
 }
 
-func computeMidNotOnline(input string) {
+func computeMidNotOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -55,24 +47,17 @@ func computeMidNotOnline(input string) {
 		cyk.Add(s)
 	}
 	// Insert in the middle
-	cyk.Insert("if", 35)
+	cyk.Insert(file.Sub, file.Pos)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeMidNotOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeMidNotOnline")
 }
 
-func computeEndNotOnline(input string) {
+func computeEndNotOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -87,19 +72,12 @@ func computeEndNotOnline(input string) {
 		cyk.Add(s)
 	}
 	// Add at the end
-	cyk.Add("}")
+	cyk.Add(file.Sub)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeEndNotOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeEndNotOnline")
 }

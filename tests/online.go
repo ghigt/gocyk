@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ghigt/gocyk"
 )
 
-func computeBegOnline(input string) {
+func computeBegOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -18,7 +17,7 @@ func computeBegOnline(input string) {
 	t := time.Now()
 
 	// Insert at the beginning
-	cyk.Add("package")
+	cyk.Add(file.Sub)
 
 	// Compute everything
 	for _, s := range sub {
@@ -28,19 +27,12 @@ func computeBegOnline(input string) {
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeBegOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeBegOnline")
 }
 
-func computeMidOnline(input string) {
+func computeMidOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -52,11 +44,11 @@ func computeMidOnline(input string) {
 
 	// Compute everything
 	for i, s := range sub {
-		if i == 35 {
+		if i == file.Pos {
 			t = time.Now()
 
 			// Insert in the middle
-			cyk.Add("if")
+			cyk.Add(file.Sub)
 		}
 		cyk.Add(s)
 	}
@@ -64,19 +56,12 @@ func computeMidOnline(input string) {
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeMidOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeMidOnline")
 }
 
-func computeEndOnline(input string) {
+func computeEndOnline(file File, input []byte) {
 
 	// Scanning input
 	sub := scanning(input)
@@ -92,19 +77,12 @@ func computeEndOnline(input string) {
 	t := time.Now()
 
 	// Add at the end
-	cyk.Add("}")
+	cyk.Add(file.Sub)
 
 	// Build the Tree
 	cyk.BuildTrees()
 
-	fmt.Printf("computeEndOnline\t:\t%v\t:\t", time.Since(t))
+	nt := time.Since(t)
 
-	// Check if it works
-	if cyk.IsValid() {
-		fmt.Println("It works :)")
-	} else {
-		fmt.Println("It fails :(")
-	}
-
-	//fmt.Println(rtable.PrettyPrint(cyk.Table, cyk.Sub))
+	echo(cyk, nt, "computeEndOnline")
 }

@@ -2,25 +2,47 @@ package main
 
 import "flag"
 
-var (
-	beg = flag.String("beg", "", "beginning missed")
-	mid = flag.String("mid", "", "middle missed")
-	end = flag.String("end", "", "end missed")
-)
+type Test struct {
+	Name string // Name + "_" + "beg|mid|end" + ".go.g"
+	Beg  File
+	Mid  File
+	End  File
+}
+
+type File struct {
+	Pos int
+	Sub string
+}
+
+var tests []Test = []Test{
+	Test{
+		Name: "test",
+		Beg:  File{Pos: 0, Sub: "package"},
+		Mid:  File{Pos: 35, Sub: "if"},
+		End:  File{Sub: "}"},
+	},
+}
 
 func main() {
 
 	flag.Parse()
 
-	computeBegNotOnline(*beg)
-	computeBegOnline(*beg)
-	computeBegIncremental(*beg)
+	for _, t := range tests {
 
-	computeMidNotOnline(*mid)
-	computeMidOnline(*mid)
-	computeMidIncremental(*mid)
+		beg := getFile(t.Name, "beg")
+		mid := getFile(t.Name, "mid")
+		end := getFile(t.Name, "end")
 
-	computeEndNotOnline(*end)
-	computeEndOnline(*end)
-	computeEndIncremental(*end)
+		computeBegNotOnline(t.Beg, beg)
+		computeBegOnline(t.Beg, beg)
+		computeBegIncremental(t.Beg, beg)
+
+		computeMidNotOnline(t.Mid, mid)
+		computeMidOnline(t.Mid, mid)
+		computeMidIncremental(t.Mid, mid)
+
+		computeEndNotOnline(t.End, end)
+		computeEndOnline(t.End, end)
+		computeEndIncremental(t.End, end)
+	}
 }
