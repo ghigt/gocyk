@@ -180,7 +180,12 @@ var grammarGo = grm.Grammar{
 
 	// Type
 	"Type": {
-		"int", "string", "float",
+		"int",
+		"string",
+		"float",
+
+		`[a-zA-Z]+`,                      // Copy MuCaD
+		grm.NonTerminal{"MCDP", "Alpha"}, // Copy MuCaD
 	},
 	// Text
 	"Text": {`"[a-zA-Z]*"`},
