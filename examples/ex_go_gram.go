@@ -59,10 +59,10 @@ func main() {
 		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 
-	for _, t := range cyk.BuildTrees() {
-		echo(t)
-		fmt.Println()
-	}
+	//for _, t := range cyk.BuildTrees() {
+	//	echo(t)
+	//	fmt.Println()
+	//}
 
 	if cyk.IsValid() {
 		fmt.Println("It works :)")

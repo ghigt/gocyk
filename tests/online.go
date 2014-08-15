@@ -25,7 +25,7 @@ func computeBegOnline(file File, input []byte) {
 	}
 
 	// Build the Tree
-	cyk.BuildTrees()
+	//cyk.BuildTrees()
 
 	nt := time.Since(t)
 
@@ -54,7 +54,7 @@ func computeMidOnline(file File, input []byte) {
 	}
 
 	// Build the Tree
-	cyk.BuildTrees()
+	//cyk.BuildTrees()
 
 	nt := time.Since(t)
 
@@ -80,7 +80,7 @@ func computeEndOnline(file File, input []byte) {
 	cyk.Add(file.Sub)
 
 	// Build the Tree
-	cyk.BuildTrees()
+	//cyk.BuildTrees()
 
 	nt := time.Since(t)
 
