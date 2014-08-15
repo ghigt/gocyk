@@ -13,7 +13,8 @@ import (
 )
 
 func getFile(name string, prefix string) []byte {
-	content, err := ioutil.ReadFile(name + "_" + prefix + ".go.g")
+	path := "files/" + name + "_" + prefix + ".go.g"
+	content, err := ioutil.ReadFile(path)
 
 	if err != nil {
 		log.Print(err)

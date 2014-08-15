@@ -16,9 +16,21 @@ type File struct {
 
 var tests []Test = []Test{
 	Test{
-		Name: "test",
+		Name: "small",
+		Beg:  File{Pos: 0, Sub: "package"},
+		Mid:  File{Pos: 14, Sub: "ioutil"},
+		End:  File{Sub: "}"},
+	},
+	Test{
+		Name: "medium",
 		Beg:  File{Pos: 0, Sub: "package"},
 		Mid:  File{Pos: 35, Sub: "if"},
+		End:  File{Sub: "}"},
+	},
+	Test{
+		Name: "big",
+		Beg:  File{Pos: 0, Sub: "package"},
+		Mid:  File{Pos: 133, Sub: "if"},
 		End:  File{Sub: "}"},
 	},
 }
