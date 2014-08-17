@@ -45,7 +45,9 @@ func (g *GoCYK) Insert(s string, pos int) error {
 	copy(g.Sub[pos+1:], g.Sub[pos:])
 	g.Sub[pos] = s
 	g.completeColumn(s, c, pos)
-	g.insertFollowing(pos)
+	if pos < g.Table.Size()-1 {
+		g.insertFollowing(pos)
+	}
 	return nil
 }
 

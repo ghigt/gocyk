@@ -43,13 +43,7 @@ func (g *GoCYK) buildTree(tok grm.Token, row int, col int) *ptree.PTree {
 	return nil
 }
 
-func (g *GoCYK) intermediate(c chan *ptree.PTree, wg *sync.WaitGroup, tok grm.Token, row int, col int) {
-	defer (*wg).Done()
-	if tree := g.buildTree(tok, row, col); tree != nil {
-		c <- tree
-	} else {
-		log.Fatal("nil Tree")
-	}
+func (g *GoCYK) intermediate(c chan<- *ptree.PTree, wg *sync.WaitGroup, tok grm.Token, row int, col int) {
 }
 
 func (g *GoCYK) BuildTrees() []*ptree.PTree {
@@ -66,7 +60,17 @@ func (g *GoCYK) BuildTrees() []*ptree.PTree {
 				if itm.IsEmpty() == false {
 					for _, tok := range itm.GetTokens() {
 						wg.Add(1)
-						go g.intermediate(c, &wg, tok, row, col)
+						go func(tok grm.Token, row int, col int) {
+
+							defer wg.Done()
+
+							if tree := g.buildTree(tok, row, col); tree != nil {
+								c <- tree
+							} else {
+								log.Fatal("nil Tree")
+							}
+
+						}(tok, row, col)
 					}
 					break
 				}
@@ -80,5 +84,30 @@ func (g *GoCYK) BuildTrees() []*ptree.PTree {
 	for p := range c {
 		pts = append(pts, p)
 	}
+	return pts
+}
+
+func (g *GoCYK) BuildTreesNotC() []*ptree.PTree {
+	size := g.Table.Size()
+	pts := []*ptree.PTree{}
+
+	for row := 0; row < size; {
+		col := size - 1
+		for ; col >= row; col-- {
+			itm := g.Table.GetItem(col, row)
+			if itm.IsEmpty() == false {
+				for _, tok := range itm.GetTokens() {
+					if tree := g.buildTree(tok, row, col); tree != nil {
+						pts = append(pts, tree)
+					} else {
+						log.Fatal("nil Tree")
+					}
+				}
+				break
+			}
+		}
+		row = col + 1
+	}
+
 	return pts
 }
