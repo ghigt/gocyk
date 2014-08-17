@@ -1,6 +1,10 @@
 package gocyk
 
-import "github.com/ghigt/gocyk/rtable"
+import (
+	"sync"
+
+	"github.com/ghigt/gocyk/rtable"
+)
 
 // CompleteColumn fills the given column with the correct items depending
 // on the string, the position and the grammar.
@@ -30,9 +34,12 @@ func (g *GoCYK) completeColumn(s string, c *rtable.Column, pos int) {
 }
 
 // completeColumnFrom recompute the column from a given position of index.
-func (g *GoCYK) completeColumnFrom(pos, col int) {
+func (g *GoCYK) completeColumnFrom(left <-chan struct{}, right chan<- struct{}, pos, col int) {
 	c := g.Table.GetColumn(col)
 	for i := pos; i >= 0; i-- {
+		if left != nil {
+			<-left
+		}
 		c.SetItem(&rtable.Item{}, i)
 		for l := i; l < col; l++ {
 			item := c.GetItem(i)
@@ -45,6 +52,7 @@ func (g *GoCYK) completeColumnFrom(pos, col int) {
 			}
 			c.SetItem(item, i)
 		}
+		right <- struct{}{}
 	}
 }
 
@@ -52,10 +60,20 @@ func (g *GoCYK) completeColumnFrom(pos, col int) {
 // position and recompute the items in the recognition table from
 // the given position until the end of the table.
 func (g *GoCYK) insertFollowing(pos int) {
+	var left chan struct{}
+	var wg sync.WaitGroup
+
 	for col := pos + 1; col < g.Table.Size(); col++ {
-		g.Table.GetColumn(col).AddFront(&rtable.Item{})
-		g.completeColumnFrom(pos, col)
+		wg.Add(1)
+		right := make(chan struct{}, col+1)
+		go func(left chan struct{}, right chan struct{}, col int, pos int) {
+			defer wg.Done()
+			g.Table.GetColumn(col).AddFront(&rtable.Item{})
+			g.completeColumnFrom(left, right, pos, col)
+		}(left, right, col, pos)
+		left = right
 	}
+	wg.Wait()
 }
 
 // removeFollowing removes the first item of the right-hand of the
@@ -64,6 +82,6 @@ func (g *GoCYK) insertFollowing(pos int) {
 func (g *GoCYK) removeFollowing(pos int) {
 	for col := pos; col < g.Table.Size(); col++ {
 		g.Table.GetColumn(col).Remove(0)
-		g.completeColumnFrom(pos-1, col)
+		g.completeColumnFrom(make(chan struct{}), make(chan struct{}), pos-1, col)
 	}
 }
