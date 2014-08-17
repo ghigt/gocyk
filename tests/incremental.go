@@ -24,9 +24,6 @@ func computeBegIncremental(file File, input []byte) {
 	// Insert at the beginning
 	cyk.Insert(file.Sub, file.Pos)
 
-	// Build the Tree
-	//cyk.BuildTrees()
-
 	nt := time.Since(t)
 
 	echo(cyk, nt, "computeBegIncremental")
@@ -50,9 +47,6 @@ func computeMidIncremental(file File, input []byte) {
 	// Insert in the middle
 	cyk.Insert(file.Sub, file.Pos)
 
-	// Build the Tree
-	//cyk.BuildTrees()
-
 	nt := time.Since(t)
 
 	echo(cyk, nt, "computeMidIncremental")
@@ -75,9 +69,6 @@ func computeEndIncremental(file File, input []byte) {
 
 	// Add at the end
 	cyk.Add(file.Sub)
-
-	// Build the Tree
-	//cyk.BuildTrees()
 
 	nt := time.Since(t)
 

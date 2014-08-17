@@ -24,9 +24,6 @@ func computeBegNotOnline(file File, input []byte) {
 		cyk.Add(s)
 	}
 
-	// Build the Tree
-	//cyk.BuildTrees()
-
 	nt := time.Since(t)
 
 	echo(cyk, nt, "computeBegNotOnline")
@@ -49,9 +46,6 @@ func computeMidNotOnline(file File, input []byte) {
 	// Insert in the middle
 	cyk.Insert(file.Sub, file.Pos)
 
-	// Build the Tree
-	//cyk.BuildTrees()
-
 	nt := time.Since(t)
 
 	echo(cyk, nt, "computeMidNotOnline")
@@ -73,9 +67,6 @@ func computeEndNotOnline(file File, input []byte) {
 	}
 	// Add at the end
 	cyk.Add(file.Sub)
-
-	// Build the Tree
-	//cyk.BuildTrees()
 
 	nt := time.Since(t)
 

@@ -1,6 +1,10 @@
 package main
 
-import "flag"
+import (
+	"flag"
+	"fmt"
+	"time"
+)
 
 type Test struct {
 	Name string // Name + "_" + "beg|mid|end" + ".go.g"
@@ -44,17 +48,38 @@ func main() {
 		beg := getFile(t.Name, "beg")
 		mid := getFile(t.Name, "mid")
 		end := getFile(t.Name, "end")
+		origin := getFile(t.Name, "origin")
 
-		computeBegNotOnline(t.Beg, beg)
-		computeBegOnline(t.Beg, beg)
-		computeBegIncremental(t.Beg, beg)
+		{
+			computeBegNotOnline(t.Beg, beg)
+			computeBegOnline(t.Beg, beg)
+			computeBegIncremental(t.Beg, beg)
 
-		computeMidNotOnline(t.Mid, mid)
-		computeMidOnline(t.Mid, mid)
-		computeMidIncremental(t.Mid, mid)
+			computeMidNotOnline(t.Mid, mid)
+			computeMidOnline(t.Mid, mid)
+			computeMidIncremental(t.Mid, mid)
 
-		computeEndNotOnline(t.End, end)
-		computeEndOnline(t.End, end)
-		computeEndIncremental(t.End, end)
+			computeEndNotOnline(t.End, end)
+			computeEndOnline(t.End, end)
+			computeEndIncremental(t.End, end)
+		}
+
+		{
+			now := time.Now()
+
+			t1 := now
+			cyk := computeCYK(origin)
+			for i := 0; i < 10; i++ {
+				t := (computeTreeNormal(cyk))
+				t1 = t1.Add(t)
+			}
+			t2 := now
+			for i := 0; i < 10; i++ {
+				t := computeTreeConcurrently(cyk)
+				t2 = t2.Add(t)
+			}
+			fmt.Println("diff=", t1.Nanosecond()-t2.Nanosecond(), "us")
+		}
+
 	}
 }
