@@ -74,3 +74,49 @@ func computeEndIncremental(file File, input []byte) {
 
 	echo(cyk, nt, "computeEndIncremental")
 }
+
+func computeBegIncrementalNC(file File, input []byte) {
+
+	// Scanning input
+	sub := scanning(input)
+
+	// Instantiate the library
+	cyk := gocyk.New(&grammarGo)
+
+	// Compute everything
+	for _, s := range sub {
+		cyk.Add(s)
+	}
+
+	t := time.Now()
+
+	// Insert at the beginning
+	cyk.InsertNC(file.Sub, file.Pos)
+
+	nt := time.Since(t)
+
+	echo(cyk, nt, "computeBegIncrementalNC")
+}
+
+func computeMidIncrementalNC(file File, input []byte) {
+
+	// Scanning input
+	sub := scanning(input)
+
+	// Instantiate the library
+	cyk := gocyk.New(&grammarGo)
+
+	// Compute everything
+	for _, s := range sub {
+		cyk.Add(s)
+	}
+
+	t := time.Now()
+
+	// Insert in the middle
+	cyk.InsertNC(file.Sub, file.Pos)
+
+	nt := time.Since(t)
+
+	echo(cyk, nt, "computeMidIncrementalNC")
+}

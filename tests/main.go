@@ -62,6 +62,13 @@ func main() {
 			computeEndNotOnline(t.End, end)
 			computeEndOnline(t.End, end)
 			computeEndIncremental(t.End, end)
+			fmt.Println()
+		}
+
+		{
+			computeBegIncrementalNC(t.Beg, beg)
+			computeMidIncrementalNC(t.Mid, mid)
+			fmt.Println()
 		}
 
 		{
@@ -79,6 +86,7 @@ func main() {
 				t2 = t2.Add(t)
 			}
 			fmt.Println("diff=", t1.Nanosecond()-t2.Nanosecond(), "us")
+			fmt.Println()
 		}
 
 	}

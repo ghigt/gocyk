@@ -51,6 +51,24 @@ func (g *GoCYK) Insert(s string, pos int) error {
 	return nil
 }
 
+// InsertNC inserts a new substring at the given position then
+// recalculate the recognition table and the parsing tree
+// (wihtout concurrency).
+func (g *GoCYK) InsertNC(s string, pos int) error {
+	c, err := g.Table.Insert(pos)
+	if err != nil {
+		return err
+	}
+	g.Sub = append(g.Sub, "")
+	copy(g.Sub[pos+1:], g.Sub[pos:])
+	g.Sub[pos] = s
+	g.completeColumn(s, c, pos)
+	if pos < g.Table.Size()-1 {
+		g.insertFollowingWithoutC(pos)
+	}
+	return nil
+}
+
 // Remove removes the substring at the given position then
 // recalculate the recognition table and the parsing tree.
 func (g *GoCYK) Remove(pos int) error {
