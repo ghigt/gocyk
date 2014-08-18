@@ -85,7 +85,8 @@ func main() {
 				t := computeTreeConcurrently(cyk)
 				t2 = t2.Add(t)
 			}
-			fmt.Println("diff=", t1.Nanosecond()-t2.Nanosecond(), "us")
+			fmt.Println("Compute Tree difference:",
+				t1.Nanosecond()-t2.Nanosecond(), "us")
 			fmt.Println()
 		}
 
