@@ -1,1 +1,1 @@
-../examples/go_gram.go
+../examples/go_gram/go_gram.go

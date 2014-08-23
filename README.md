@@ -100,7 +100,7 @@ computeEndIncremental    :    25.843226ms     :    It works :)
 ...
 ```
 
-It uses a home made "go like" grammar in CNF available in `examples/go_gram.go`.
+It uses a home made "go like" grammar in CNF available in `examples/go_gram/go_gram.go`.
 
 Context
 =======
