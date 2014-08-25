@@ -1,0 +1,61 @@
+.
+├── LICENCE
+├── README.md
+├── TREE
+├── compute_table.go
+├── compute_tree.go
+├── examples
+│   ├── go_gram
+│   │   ├── ex_go_gram.go
+│   │   └── go_gram.go
+│   ├── log
+│   ├── num_gram
+│   │   ├── ex_num_gram.go
+│   │   └── num_gram.go
+│   ├── test
+│   │   ├── test
+│   │   ├── test.go.g
+│   │   ├── test0.go.g
+│   │   ├── test1.go.g
+│   │   ├── test2.go.g
+│   │   ├── test3.go.g
+│   │   ├── test4.go.g
+│   │   └── test5.go.g
+│   ├── test.sh
+│   └── wiki_gram
+│       └── wiki_gram.go
+├── gocyk.go
+├── grammar
+│   └── grammar.go
+├── ptree
+│   └── ptree.go
+├── rtable
+│   ├── column.go
+│   ├── item.go
+│   ├── prettyprint.go
+│   └── rtable.go
+└── tests
+    ├── files
+    │   ├── big_beg.go.g
+    │   ├── big_end.go.g
+    │   ├── big_mid.go.g
+    │   ├── big_origin.go.g
+    │   ├── medium_beg.go.g
+    │   ├── medium_end.go.g
+    │   ├── medium_mid.go.g
+    │   ├── medium_origin.go.g
+    │   ├── small_beg.go.g
+    │   ├── small_end.go.g
+    │   ├── small_mid.go.g
+    │   └── small_origin.go.g
+    ├── go_gram.go -> ../examples/go_gram/go_gram.go
+    ├── incremental.go
+    ├── log_incremental
+    ├── main.go
+    ├── not_online.go
+    ├── online.go
+    ├── tests
+    ├── tree.go
+    └── utils.go
+
+10 directories, 48 files

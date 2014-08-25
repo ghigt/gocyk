@@ -13,7 +13,7 @@ Additionnaly to the recognition table, the lib complete a parse tree.
 Installation
 ============
 
-Be sur to have a Go environment installed. Then, just call:
+Be sur to have a [Go environment installed](https://golang.org/doc/install). Then, just call:
 ```bash
 $ go get github.com/ghigt/gocyk
 ```
