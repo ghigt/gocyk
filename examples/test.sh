@@ -1,6 +1,6 @@
 #!/bin/bash
 
-go build -o examples ex_go_gram.go go_gram.go && (
+go build -o examples go_gram/ex_go_gram.go go_gram/go_gram.go && (
         (./examples "`cat test/test0.go.g`" >  log && echo test0 PASS || echo test0 failed) &&
         (./examples "`cat test/test1.go.g`" >> log && echo test1 PASS || echo test1 failed) &&
         (./examples "`cat test/test2.go.g`" >> log && echo test2 PASS || echo test2 failed) &&
